@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
-//import com.bumptech.glide.Glide
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.kk.kkweather.R
 import com.kk.kkweather.R.id.toolBar
@@ -80,7 +80,7 @@ class WeatherActivity : AppCompatActivity() {
                 runOnUiThread(object :Runnable {
                     override fun run() {
                         //backgroundPic.setImageResource()
-//                        Glide.with(context).load(responseDate).into(backgroundPic)
+                        Glide.with(context).load(responseDate).into(backgroundPic)
                     }
                 })
             }
