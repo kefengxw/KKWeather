@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+//import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.kk.kkweather.R
 import com.kk.kkweather.R.id.toolBar
@@ -67,7 +68,7 @@ class WeatherActivity : AppCompatActivity() {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("WeatherActivity", "BackgroundPic-onFailure")
-                Toast.makeText(context, "Kweather failed to get BackgroundPic information", 10).show()
+                Toast.makeText(context, "Kweather failed to get BackgroundPic information", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -79,7 +80,7 @@ class WeatherActivity : AppCompatActivity() {
                 runOnUiThread(object :Runnable {
                     override fun run() {
                         //backgroundPic.setImageResource()
-                        //Glide.with(context).load(responseDate).into(backgroundPic)
+//                        Glide.with(context).load(responseDate).into(backgroundPic)
                     }
                 })
             }
@@ -91,7 +92,7 @@ class WeatherActivity : AppCompatActivity() {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("WeatherActivity", "WeatherInfo-onFailure")
-                Toast.makeText(context, "Kweather failed to get WeatherInfo information", 10).show()
+                Toast.makeText(context, "Kweather failed to get WeatherInfo information", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call?, response: Response?) {
