@@ -8,7 +8,7 @@ import android.util.Log
  */
 class LogUtil {
     companion object {
-        
+
         private val kwlogall : Int = 0
         private val verbosekw : Int= 1
         private val debugkw :Int = 2
@@ -17,8 +17,6 @@ class LogUtil {
         private val errorkw : Int = 5
         private val nonthingkw : Int = 6
         private val loglevelkw : Int = kwlogall
-        var handler = Handler()
-        var handler1 = Handler()
 
         var Pid : String = android.os.Process.myPid().toString()
         var Tid : String = android.os.Process.myTid().toString()
