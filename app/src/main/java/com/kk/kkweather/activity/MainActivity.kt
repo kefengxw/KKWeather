@@ -13,19 +13,18 @@ import com.kk.kkweather.activity.AreaRecyListAdapter
 import com.kk.kkweather.util.LogUtil
 import android.view.View
 import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kk.kkweather.R
 import com.kk.kkweather.activity.OnAreaItemClickListener
+import com.kk.kkweather.gson.JsonCity
+import com.kk.kkweather.gson.JsonCountry
+import com.kk.kkweather.gson.JsonProvince
 import com.kk.kkweather.util.HttpUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.Call
 import okhttp3.Response
 import java.io.IOException
-//import com.google.gson.Gson
-//import com.google.gson.reflect.TypeToken
-//import com.kk.kkweather.gson.JsonCity
-//import com.kk.kkweather.gson.JsonCounty
-//import com.kk.kkweather.gson.JsonProvince
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,8 +45,6 @@ class MainActivity : AppCompatActivity() {
     var areaAdapter : AreaRecyListAdapter = AreaRecyListAdapter(areaList,this)
 
     val URL_OF_AREA : String = "http://guolin.tech/api/china"
-
-//    lateinit var pb : ProgressBar
 
     companion object {
         val LEVEL_PROVINCE : Int = 1
@@ -107,10 +104,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        LogUtil.i("KW-MainActivity", "MainActivity onCreate")
-//
+        LogUtil.i("KW-MainActivity", "MainActivity onCreate")
 ////        tryToStartWeatherActivity()
-//
         LocalDateInitProvince()
         LocalDateInitCity()
         LocalDateInitCounty()
@@ -122,12 +117,11 @@ class MainActivity : AppCompatActivity() {
         areaListView.layoutManager = linearLayoutManager//LinearLayoutManager(this)
 
         areaListView.adapter = areaAdapter
-//
-        switchToProvinceActivity(this)//必须在这个之前调用，否则非法访问areaList
-//
-//        setBackButtionListener(this)
-//        setAreaAdapterListener()
 
+        switchToProvinceActivity(this)//必须在这个之前调用，否则非法访问areaList
+
+        setBackButtionListener(this)
+        setAreaAdapterListener()
     }
 
 //    private fun tryToStartWeatherActivity(){
@@ -145,7 +139,6 @@ class MainActivity : AppCompatActivity() {
     private fun setBackButtionListener(ctx:Context) {
         area_main_title_backbutton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                areaListView.adapter.notifyDataSetChanged()
                 when (currentLevel) {
                     LEVEL_PROVINCE -> {
                         //do nothing
@@ -178,7 +171,6 @@ class MainActivity : AppCompatActivity() {
                         switchToCountyActivity(context, areaList[position].name, selectProvinceId, areaList[position].id)
                     }
                     LEVEL_COUNTRY -> {
-                        //WeatherActivity.actionStart(context, areaList[position].weatherId)
 //                        switchToWeatherActivity(context, areaList[position].name, areaList[position].weatherId)
                     }
                 }
@@ -190,12 +182,12 @@ class MainActivity : AppCompatActivity() {
     {
         //areaListProvince.clear()//第一次清空省份信息，只是做测试使用
         areaList.clear()
-//        if (areaListProvince.isEmpty()){
-//            queryProvinceInfo()
-//        }else{
+        if (areaListProvince.isEmpty()){
+            queryProvinceInfo()
+        }else{
             for(i in areaListProvince)  areaList.add(i)
             areaListView.adapter.notifyDataSetChanged()
-//        }
+        }
 
         areaListView.setHasFixedSize(true)
         currentLevel = LEVEL_PROVINCE
@@ -285,69 +277,69 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun queryAreaInfo(address : String){
-//        HttpUtil.sendOkHttpRequest(address, object: okhttp3.Callback {
-//            override fun onFailure(call: Call?, e: IOException?) {
-//                //在这里进行解码Json失败的操作，当前属于子线程
-//                LogUtil.i("HttpCallback", "queryAreaInfo-onFailure")
-//                Toast.makeText(context, "Kweather failed to get Area information", 10).show()
-//            }
-//
-//            override fun onResponse(call: Call?, response: Response?) {
-//                //在这里进行解码Json操作,在这里可以看到解析好的数据，当前属于子线程
-//                var responseDate : String? = response?.body()?.string()
-//
-//                LogUtil.i("HttpCallback", "queryAreaInfo-onResponse: ${responseDate}")
-//
-////                parseJsonWithGSONforAreaList(responseDate)
-//            }
-//        })
+        HttpUtil.sendOkHttpRequest(address, object: okhttp3.Callback {
+            override fun onFailure(call: Call?, e: IOException?) {
+                //在这里进行解码Json失败的操作，当前属于子线程
+                LogUtil.i("HttpCallback", "queryAreaInfo-onFailure")
+                Toast.makeText(context, "Kweather failed to get Area information", 10).show()
+            }
+
+            override fun onResponse(call: Call?, response: Response?) {
+                //在这里进行解码Json操作,在这里可以看到解析好的数据，当前属于子线程
+                var responseDate : String? = response?.body()?.string()
+
+                LogUtil.i("HttpCallback", "queryAreaInfo-onResponse: ${responseDate}")
+
+                parseJsonWithGSONforAreaList(responseDate)
+            }
+        })
     }
 
-//    private fun parseJsonWithGSONforAreaList(jsonData:String?){
-//
-//        LogUtil.i("HttpCallback", "Start to praseJsonWithGSON for AreaInfo")
-//
-//        if (null == jsonData) return
-//
-//        val gson : Gson = Gson()
-//
-//        when (currentLevel) {
-//            LEVEL_PROVINCE -> {
-//                val myType = object : TypeToken<MutableList<JsonProvince>>(){}.type
-//                val numbers: MutableList<JsonProvince> = gson.fromJson(jsonData, myType)
-//
-//                for (i : JsonProvince in numbers)
-//                {
-//                    LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
-//                    areaList.add(AreaItem(i.name, id = i.id))
-//                }
-//            }
-//
-//            LEVEL_CITY -> {
-//                val myType = object : TypeToken<MutableList<JsonCity>>(){}.type
-//                val numbers: MutableList<JsonCity> = gson.fromJson(jsonData, myType)
-//
-//                for (i : JsonCity in numbers)
-//                {
-//                    LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
-//                    areaList.add(AreaItem(i.name, id = i.id))
-//                }
-//            }
-//
-//            LEVEL_COUNTRY -> {
-//                val myType = object : TypeToken<MutableList<JsonCounty>>(){}.type
-//                val numbers: MutableList<JsonCounty> = gson.fromJson(jsonData, myType)
-//
-//                for (i : JsonCounty in numbers)
-//                {
-//                    LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name} + ${i.weather_id}")
-//                    areaList.add(AreaItem(i.name, id = i.id, weatherId = i.weather_id))
-//                }
-//            }
-//        }
-//
-//        saveAreaListDataToDifferentListAndNotifiyUI(areaList,currentLevel)
-//    }
+    private fun parseJsonWithGSONforAreaList(jsonData:String?){
+
+        LogUtil.i("HttpCallback", "Start to praseJsonWithGSON for AreaInfo")
+
+        if (null == jsonData) return
+
+        val gson : Gson = Gson()
+
+        when (currentLevel) {
+            LEVEL_PROVINCE -> {
+                val myType = object : TypeToken<MutableList<JsonProvince>>(){}.type
+                val numbers: MutableList<JsonProvince> = gson.fromJson(jsonData, myType)
+
+                for (i : JsonProvince in numbers)
+                {
+                    LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
+                    areaList.add(AreaItem(i.name, id = i.id))
+                }
+            }
+
+            LEVEL_CITY -> {
+                val myType = object : TypeToken<MutableList<JsonCity>>(){}.type
+                val numbers: MutableList<JsonCity> = gson.fromJson(jsonData, myType)
+
+                for (i : JsonCity in numbers)
+                {
+                    LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
+                    areaList.add(AreaItem(i.name, id = i.id))
+                }
+            }
+
+            LEVEL_COUNTRY -> {
+                val myType = object : TypeToken<MutableList<JsonCountry>>(){}.type
+                val numbers: MutableList<JsonCountry> = gson.fromJson(jsonData, myType)
+
+                for (i : JsonCountry in numbers)
+                {
+                    LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name} + ${i.weather_id}")
+                    areaList.add(AreaItem(i.name, id = i.id, weatherId = i.weather_id))
+                }
+            }
+        }
+
+        saveAreaListDataToDifferentListAndNotifiyUI(areaList,currentLevel)
+    }
 
     fun getAreaListData():MutableList<AreaItem>{
         return areaList
