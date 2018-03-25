@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         LogUtil.i("KW-MainActivity", "MainActivity onCreate")
-////        tryToStartWeatherActivity()
+        tryToStartWeatherActivity()
 //        LocalDateInitProvince()
 //        LocalDateInitCity()
 //        LocalDateInitCounty()
@@ -124,17 +124,17 @@ class MainActivity : AppCompatActivity() {
         setAreaAdapterListener()
     }
 
-//    private fun tryToStartWeatherActivity(){
-//        //后续可以根据定位来确定，或者根据设置来确定城市
-//        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-//        var i = prefs.getString("weatherId", null)
-//        var j = prefs.getString("country", null)
-//        if (i != null)
-//        {
-//            WeatherActivity.actionStart(context, j, i)
-//            finish()
-//        }
-//    }
+    private fun tryToStartWeatherActivity(){
+        //后续可以根据定位来确定，或者根据设置来确定城市
+        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var i = prefs.getString("weatherId", null)
+        var j = prefs.getString("country", null)
+        if (i != null)
+        {
+            WeatherActivity.actionStart(context, j, i)
+            finish()
+        }
+    }
 
     private fun setBackButtionListener(ctx:Context) {
         area_main_title_backbutton.setOnClickListener(object : View.OnClickListener {
@@ -230,11 +230,11 @@ class MainActivity : AppCompatActivity() {
         var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         WeatherActivity.actionStart(context, country, weatherId)
         //保存到本地
-//        var editor : SharedPreferences.Editor = prefs.edit()
-//        editor.putString("country", country)
-//        editor.putString("weatherId", weatherId)
-//        editor.apply()
-//        finish()
+        var editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("country", country)
+        editor.putString("weatherId", weatherId)
+        editor.apply()
+        finish()
     }
 
     private fun backToCityActivity(ctx:Context)
