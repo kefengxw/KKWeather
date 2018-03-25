@@ -30,6 +30,8 @@ class WeatherActivity : AppCompatActivity() {
     var picbgReady : Boolean = false
     var weatherInfoReady : Boolean = false
     var usingDefaultWeatherInfo : Boolean = false
+    var usingDefaultPicBgInfo : Boolean = false
+
     lateinit var jsonWeatherData : JsonWeather
 
     companion object {
@@ -74,7 +76,11 @@ class WeatherActivity : AppCompatActivity() {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("WeatherActivity", "BackgroundPic-onFailure")
-                Toast.makeText(context, "Kweather failed to get BackgroundPic information", Toast.LENGTH_SHORT).show()
+
+                usingDefaultPicBgInfo = true
+                picbgReady = true
+
+
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -96,7 +102,11 @@ class WeatherActivity : AppCompatActivity() {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("WeatherActivity", "WeatherInfo-onFailure")
-                Toast.makeText(context, "Kweather failed to get WeatherInfo information", Toast.LENGTH_SHORT).show()
+
+                weatherInfoReady = true
+                usingDefaultWeatherInfo = true
+
+                tryToUpdateWeatherActivityUi()
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -105,14 +115,13 @@ class WeatherActivity : AppCompatActivity() {
 
                 LogUtil.i("WeatherActivity", "WeatherInfo-onResponse: ${responseDate}")
 
+                weatherInfoReady = true
                 parseJsonWithGSONforWeather(responseDate)
             }
         })
     }
 
     private fun parseJsonWithGSONforWeather(jsonData:String?) {
-
-        weatherInfoReady = true
 
         LogUtil.i("WeatherActivity", "Start to praseJsonWithGSON for weather!")
 
@@ -139,6 +148,11 @@ class WeatherActivity : AppCompatActivity() {
                     //backgroundPic.setImageResource()
                     if ("" != picbgAddr) {
                         Glide.with(context).load(picbgAddr).into(backgroundPic)
+                    }
+                    else
+                    {
+                        //使用本地的pic,后续补充101
+                        //Glide.with(context).load(picbgAddr).into(backgroundPic)
                     }
 
                     if (false == usingDefaultWeatherInfo) {
