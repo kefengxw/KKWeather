@@ -26,6 +26,11 @@ class WeatherActivity : AppCompatActivity() {
     val context = this
     val weatherAddrHead = "http://guolin.tech/api/weather/?cityid="
     val authKey = "9ff41582de514a658ac5f523363a6d08"
+    var picbgAddr : String = ""
+    var picbgReady : Boolean = false
+    var weatherInfoReady : Boolean = false
+    var usingDefaultWeatherInfo : Boolean = false
+    lateinit var jsonWeatherData : JsonWeather
 
     companion object {
         fun actionStart(context : Context, data_Country : String, data_WeatherId : String){
@@ -56,10 +61,11 @@ class WeatherActivity : AppCompatActivity() {
 
         weather_cityname.text = currentCountry
 
-        setWeatherElementVisibleByLoading(true)
+        setWeatherElementVisibleByLoading(true, usingDefaultWeatherInfo)
 
+
+        //*********************注意这里必须考虑先后顺序的问题*********************
         queryWeatherInfo(weatherAddr)
-
         queryBackgroundPic(backgroundPicAddr)
     }
 
@@ -77,12 +83,10 @@ class WeatherActivity : AppCompatActivity() {
 
                 LogUtil.i("WeatherActivity", "BackgroundPic-onResponse: ${responseDate}")
 
-                runOnUiThread(object :Runnable {
-                    override fun run() {
-                        //backgroundPic.setImageResource()
-                        Glide.with(context).load(responseDate).into(backgroundPic)
-                    }
-                })
+                picbgAddr = responseDate!!
+                picbgReady = true
+
+                tryToUpdateWeatherActivityUi()
             }
         })
     }
@@ -106,27 +110,52 @@ class WeatherActivity : AppCompatActivity() {
         })
     }
 
-    private fun parseJsonWithGSONforWeather(jsonData:String?){
+    private fun parseJsonWithGSONforWeather(jsonData:String?) {
+
+        weatherInfoReady = true
 
         LogUtil.i("WeatherActivity", "Start to praseJsonWithGSON for weather!")
 
-        if (null == jsonData) return
+        if (null == jsonData || (jsonData?.contains("error")!!)) {
+
+            usingDefaultWeatherInfo = true
+            tryToUpdateWeatherActivityUi()//那就还是刷新一下吧
+            return
+        }
 
         val gson : Gson = Gson()
 
-        var jsonWeatherData : JsonWeather = gson.fromJson(jsonData, JsonWeather::class.java)
+        jsonWeatherData = gson.fromJson(jsonData, JsonWeather::class.java)
 
-        runOnUiThread(object :Runnable {
-            override fun run() {
-                UpdateAllWeatherInfo(jsonWeatherData)
-
-                setWeatherElementVisibleByLoading(false)
-            }
-        })
+        tryToUpdateWeatherActivityUi()
     }
 
-    private fun UpdateAllWeatherInfo(jsonWeatherData : JsonWeather)
-    {
+    private fun tryToUpdateWeatherActivityUi() {
+
+        if (true == weatherInfoReady && true == picbgReady)
+        {
+            runOnUiThread(object :Runnable {
+                override fun run() {
+                    //backgroundPic.setImageResource()
+                    if ("" != picbgAddr) {
+                        Glide.with(context).load(picbgAddr).into(backgroundPic)
+                    }
+
+                    if (false == usingDefaultWeatherInfo) {
+                        UpdateAllWeatherInfo(jsonWeatherData)
+                    }
+
+                    setWeatherElementVisibleByLoading(false, usingDefaultWeatherInfo)
+                }
+            })
+        }
+        else
+        {
+            LogUtil.i("WeatherActivity", "天气或背景更新失败!w ${weatherInfoReady},b ${picbgReady}")
+        }
+    }
+
+    private fun UpdateAllWeatherInfo(jsonWeatherData : JsonWeather) {
         LogUtil.i("WeatherActivity", "Start to UpdateAllWeatherInfo for weather!")
 
         for (i : HeWeatherItem in jsonWeatherData.heWeather!!)
@@ -161,14 +190,25 @@ class WeatherActivity : AppCompatActivity() {
             life_suggestions_content_sport.text = "运动指数: " + i.suggestion.sport.txt
             life_suggestions_content_car.text = "洗车建议: " + i.suggestion.cw.txt
         }
+
+        return
     }
 
-    fun setWeatherElementVisibleByLoading(loadingFlag: Boolean){
+    fun setWeatherElementVisibleByLoading(loadingFlag: Boolean, usingDefaultWeatherInfo : Boolean){
 //getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 //getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 //toolBar.visibility = View.VISIBLE
-//toolBar.bringToFront()
+
+        toolBar.bringToFront()
+        if (true == usingDefaultWeatherInfo) {
+            //显示数据加载失败
+            failInfo.visibility = View.VISIBLE
+            progressBar.visibility = View.INVISIBLE
+            progressBarText.visibility = View.INVISIBLE
+
+            return
+        }
 
         if (loadingFlag == true){
             scrollView.visibility = View.INVISIBLE
@@ -187,5 +227,9 @@ class WeatherActivity : AppCompatActivity() {
             progressBar.visibility = View.INVISIBLE
             progressBarText.visibility = View.INVISIBLE
         }
+
+        failInfo.visibility = View.INVISIBLE
+
+        return
     }
 }
