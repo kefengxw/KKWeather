@@ -106,9 +106,9 @@ class MainActivity : AppCompatActivity() {
 
         LogUtil.i("KW-MainActivity", "MainActivity onCreate")
 ////        tryToStartWeatherActivity()
-        LocalDateInitProvince()
-        LocalDateInitCity()
-        LocalDateInitCounty()
+//        LocalDateInitProvince()
+//        LocalDateInitCity()
+//        LocalDateInitCounty()
 
         val linearLayoutManager = LinearLayoutManager(this)
         //        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -159,13 +159,13 @@ class MainActivity : AppCompatActivity() {
             override fun onAreaItemClick(view: View, position: Int) {
                 when (currentLevel){//可以优化
                     LEVEL_PROVINCE -> {
-                        Toast.makeText(context, "Hi Click Province - ${areaList[position].name}, Position:${position}", 10).show()
+                        Toast.makeText(context, "Hi Click Province - ${areaList[position].name}, Position:${position}", Toast.LENGTH_SHORT).show()
                         selectProvince = areaList[position].name
                         selectProvinceId = areaList[position].id
                         switchToCityActivity(context, areaList[position].name, areaList[position].id)
                     }
                     LEVEL_CITY -> {
-                        Toast.makeText(context, "Hi Click City- ${areaList[position].name}", 10).show()
+                        Toast.makeText(context, "Hi Click City- ${areaList[position].name}", Toast.LENGTH_SHORT).show()
                         selectCity = areaList[position].name
 
                         switchToCountyActivity(context, areaList[position].name, selectProvinceId, areaList[position].id)
@@ -281,7 +281,7 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("HttpCallback", "queryAreaInfo-onFailure")
-                Toast.makeText(context, "Kweather failed to get Area information", 10).show()
+                Toast.makeText(context, "Kweather failed to get Area information", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -338,7 +338,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        saveAreaListDataToDifferentListAndNotifiyUI(areaList,currentLevel)
+        saveAreaListDataToDifferentListAndNotifiyUI(areaList, currentLevel)
     }
 
     fun getAreaListData():MutableList<AreaItem>{
