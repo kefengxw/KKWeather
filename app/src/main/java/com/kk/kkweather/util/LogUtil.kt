@@ -8,6 +8,7 @@ import android.util.Log
  */
 class LogUtil {
     companion object {
+        
         private val kwlogall : Int = 0
         private val verbosekw : Int= 1
         private val debugkw :Int = 2
