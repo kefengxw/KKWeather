@@ -15,7 +15,7 @@
         android:background="@color/colorPrimary"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/ic_home"
-        />
+        android:contentDescription="TODO"/>
 
     <TextView
         android:id="@+id/area_item_name"

@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                         switchToCountyActivity(context, areaList[position].name, selectProvinceId, areaList[position].id)
                     }
                     LEVEL_COUNTRY -> {
-//                        switchToWeatherActivity(context, areaList[position].name, areaList[position].weatherId)
+                        switchToWeatherActivity(context, areaList[position].name, areaList[position].weatherId)
                     }
                 }
             }
@@ -225,17 +225,17 @@ class MainActivity : AppCompatActivity() {
         area_main_title_text.text = city
     }
 
-//    private fun switchToWeatherActivity(ctx:Context, country : String, weatherId: String)
-//    {
-//        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-//        WeatherActivity.actionStart(context, country, weatherId)
-//        //保存到本地
+    private fun switchToWeatherActivity(ctx:Context, country : String, weatherId: String)
+    {
+        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        WeatherActivity.actionStart(context, country, weatherId)
+        //保存到本地
 //        var editor : SharedPreferences.Editor = prefs.edit()
 //        editor.putString("country", country)
 //        editor.putString("weatherId", weatherId)
 //        editor.apply()
 //        finish()
-//    }
+    }
 
     private fun backToCityActivity(ctx:Context)
     {
