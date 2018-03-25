@@ -290,14 +290,14 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/guide_lineup"
+                android:id="@+id/image_bgup"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@android:color/background_light"
                 android:textSize="8sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:background="@android:color/background_light" />
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <TextView
                 android:id="@+id/aqi_index"
@@ -306,8 +306,9 @@
                 android:layout_marginTop="8dp"
                 android:text="AQI Index"
                 android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                />
 
             <LinearLayout
                 android:id="@+id/aqi_index_desc"
@@ -331,8 +332,9 @@
                     android:layout_marginTop="8dp"
                     android:text="空气指数"
                     android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    />
 
             </LinearLayout>
 
@@ -348,8 +350,9 @@
                     android:layout_marginTop="8dp"
                     android:text="59"
                     android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    />
 
                 <TextView
                     android:id="@+id/aqi_index_air_value"
@@ -358,17 +361,18 @@
                     android:layout_marginTop="8dp"
                     android:text="36"
                     android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    />
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/guide_linedown"
+                android:id="@+id/image_bgdown"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@android:color/background_light"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:background="@android:color/background_light" />
 
             <TextView
@@ -378,8 +382,9 @@
                 android:layout_marginTop="8dp"
                 android:text="生活建议"
                 android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                />
 
             <TextView
                 android:id="@+id/life_suggestions_content_comf"
@@ -388,8 +393,9 @@
                 android:layout_marginTop="8dp"
                 android:text="舒适度"
                 android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                />
 
             <TextView
                 android:id="@+id/life_suggestions_content_sport"
@@ -398,8 +404,9 @@
                 android:layout_marginTop="8dp"
                 android:text="室内运动"
                 android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                />
 
             <TextView
                 android:id="@+id/life_suggestions_content_car"
@@ -408,8 +415,9 @@
                 android:layout_marginTop="8dp"
                 android:text="适合洗车"
                 android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                />
 
         </LinearLayout>
     </ScrollView>
