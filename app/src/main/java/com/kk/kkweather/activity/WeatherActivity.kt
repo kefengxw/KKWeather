@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -16,6 +17,7 @@ import com.kk.kkweather.gson.HeWeatherItem
 import com.kk.kkweather.gson.JsonWeather
 import com.kk.kkweather.util.HttpUtil
 import com.kk.kkweather.util.LogUtil
+import kotlinx.android.synthetic.main.switch_item.*
 import kotlinx.android.synthetic.main.weather_main.*
 import okhttp3.Call
 import okhttp3.Response
@@ -24,7 +26,10 @@ import java.io.IOException
 /**
  * Created by xxnfd on 25/03/2018.
  */
+//, CompoundButton.OnCheckedChangeListener
+
 class WeatherActivity : AppCompatActivity() {
+
     val context = this
     val weatherAddrHead = "http://guolin.tech/api/weather/?cityid="
     val authKey = "9ff41582de514a658ac5f523363a6d08"
@@ -71,6 +76,8 @@ class WeatherActivity : AppCompatActivity() {
         //*********************注意这里必须考虑先后顺序的问题*********************
         queryWeatherInfo(weatherAddr)
         queryBackgroundPic(backgroundPicAddr)
+
+        //switch_debug.setOnCheckedChangeListener(this)
     }
 
     private fun queryBackgroundPic(address : String){
@@ -270,4 +277,8 @@ class WeatherActivity : AppCompatActivity() {
 
         return true
     }
+
+//    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+//        Toast.makeText(context, "Hi switch", Toast.LENGTH_SHORT).show()
+//    }
 }
