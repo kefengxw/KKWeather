@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/area_item"
+    android:background="@color/colorPrimaryDark"
+    android:orientation = "horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="55dp">
+
+    <ImageView
+        android:id="@+id/area_item_image"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_weight="1.5"
+        android:background="@color/colorPrimary"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_home"
+        />
+
+    <TextView
+        android:id="@+id/area_item_name"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_weight="8.5"
+        android:fontFamily="serif"
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_purple"
+        android:gravity = "start|center"
+        android:textSize="36sp"
+        android:lines="1"
+        android:text="hello item 1"
+        />
+
+</LinearLayout>
