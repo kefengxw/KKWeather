@@ -105,7 +105,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         LogUtil.i("KW-MainActivity", "MainActivity onCreate")
-        tryToStartWeatherActivity()
+
+        if (true == tryToStartWeatherActivity())
+        {
+            LogUtil.i("KW-MainActivity", "Successful to start WeatherActivity")
+            return
+        }
+
 //        LocalDateInitProvince()
 //        LocalDateInitCity()
 //        LocalDateInitCounty()
@@ -124,16 +130,19 @@ class MainActivity : AppCompatActivity() {
         setAreaAdapterListener()
     }
 
-    private fun tryToStartWeatherActivity(){
+    private fun tryToStartWeatherActivity() : Boolean{
         //后续可以根据定位来确定，或者根据设置来确定城市
         var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         var i = prefs.getString("weatherId", null)
         var j = prefs.getString("country", null)
+        var ret = false
         if (i != null)
         {
             WeatherActivity.actionStart(context, j, i)
             finish()
+            ret = true
         }
+        return ret
     }
 
     private fun setBackButtionListener(ctx:Context) {

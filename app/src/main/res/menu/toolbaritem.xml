@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/app_bar_refresh"
+        android:title="手动刷新"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/app_bar_shot"
+        android:title="截屏"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/app_bar_setting"
+        android:title="设置Debug模式"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/app_bar_setting1"
+        android:title="Debug"
+        app:actionLayout="@layout/switch_item"
+        />
+
+</menu>
+

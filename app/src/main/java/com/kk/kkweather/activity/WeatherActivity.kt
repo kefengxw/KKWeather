@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -80,7 +82,7 @@ class WeatherActivity : AppCompatActivity() {
                 usingDefaultPicBgInfo = true
                 picbgReady = true
 
-
+                //需要处理一下
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -245,5 +247,27 @@ class WeatherActivity : AppCompatActivity() {
         failInfo.visibility = View.INVISIBLE
 
         return
+    }
+
+    override fun onCreateOptionsMenu(menu : Menu): Boolean{
+        menuInflater.inflate(R.menu.toolbaritem, menu)
+        //Toast.makeText(context, "Hi onCreateOptionsMenu", Toast.LENGTH_SHORT).show()
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId){
+            R.id.app_bar_shot -> {
+                Toast.makeText(context, "Hi app_bar_shot", Toast.LENGTH_SHORT).show()
+            }
+            R.id.app_bar_setting -> {
+                Toast.makeText(context, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
+            }
+            else ->{//R.id.app_bar_refresh
+                    Toast.makeText(context, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return true
     }
 }
