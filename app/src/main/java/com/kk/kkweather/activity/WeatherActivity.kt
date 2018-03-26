@@ -52,11 +52,14 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.weather_main)
+        setContentView(R.layout.wmdrawerlayout)
 
         toolBar.setTitle("My Title");
         toolBar.setSubtitle("Sub title")
         setSupportActionBar(toolBar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home)
 
         LogUtil.i("WeatherActivity", "onCreate: ${context}")
 
@@ -269,6 +272,7 @@ class WeatherActivity : AppCompatActivity() {
             }
             R.id.app_bar_setting -> {
                 Toast.makeText(context, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
+                //不响应任何事件处理
             }
             else ->{//R.id.app_bar_refresh
                     Toast.makeText(context, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
