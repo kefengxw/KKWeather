@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,16 +13,6 @@
         layout="@layout/weather_main"
         />
 
-    <!--<TextView-->
-        <!--android:id="@+id/draw_text"-->
-        <!--android:layout_width="300dp"-->
-        <!--android:layout_height="300dp"-->
-        <!--android:text="drawer_layout123456789012345678901234567890"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:textSize="36dp"-->
-        <!--android:background="#FFF"-->
-        <!--/>-->
     <include
         android:id="@+id/include_drawer"
         android:layout_width="match_parent"
@@ -30,6 +21,5 @@
         android:layout_gravity="start"
         layout="@layout/activity_main"
         />
-
 
 </android.support.v4.widget.DrawerLayout>

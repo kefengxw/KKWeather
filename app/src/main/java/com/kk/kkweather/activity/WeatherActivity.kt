@@ -3,6 +3,7 @@ package com.kk.kkweather.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -17,8 +18,11 @@ import com.kk.kkweather.gson.HeWeatherItem
 import com.kk.kkweather.gson.JsonWeather
 import com.kk.kkweather.util.HttpUtil
 import com.kk.kkweather.util.LogUtil
+import kotlinx.android.synthetic.main.forecast_item.view.*
 import kotlinx.android.synthetic.main.switch_item.*
 import kotlinx.android.synthetic.main.weather_main.*
+import kotlinx.android.synthetic.main.weather_main.view.*
+import kotlinx.android.synthetic.main.wmdrawerlayout.*
 import okhttp3.Call
 import okhttp3.Response
 import java.io.IOException
@@ -195,20 +199,21 @@ class WeatherActivity : AppCompatActivity() {
             weather_degree_now.text = i.now.tmp + "℃"
             weather_weather_now.text = i.now.condTxt
             forecast.text = "未来3天天气预报"
-            forecast_day1_date.text = i.dailyForecast?.get(0)?.date
-            forecast_day1_weather.text = i.dailyForecast?.get(0)?.cond?.txtD
-            forecast_day1_hightemp.text = i.dailyForecast?.get(0)?.tmp?.max
-            forecast_day1_lowtemp.text = i.dailyForecast?.get(0)?.tmp?.min
 
-            forecast_day2_date.text = i.dailyForecast?.get(1)?.date
-            forecast_day2_weather.text = i.dailyForecast?.get(1)?.cond?.txtD
-            forecast_day2_hightemp.text = i.dailyForecast?.get(1)?.tmp?.max
-            forecast_day2_lowtemp.text = i.dailyForecast?.get(1)?.tmp?.min
+            forecast_day1.forecast_date.text = i.dailyForecast?.get(0)?.date
+            forecast_day1.forecast_weather.text = i.dailyForecast?.get(0)?.cond?.txtD
+            forecast_day1.forecast_hightemp.text = i.dailyForecast?.get(0)?.tmp?.max
+            forecast_day1.forecast_lowtemp.text = i.dailyForecast?.get(0)?.tmp?.min
 
-            forecast_day3_date.text = i.dailyForecast?.get(2)?.date
-            forecast_day3_weather.text = i.dailyForecast?.get(2)?.cond?.txtD
-            forecast_day3_hightemp.text = i.dailyForecast?.get(2)?.tmp?.max
-            forecast_day3_lowtemp.text = i.dailyForecast?.get(2)?.tmp?.min
+            forecast_day2.forecast_date.text = i.dailyForecast?.get(1)?.date
+            forecast_day2.forecast_weather.text = i.dailyForecast?.get(1)?.cond?.txtD
+            forecast_day2.forecast_hightemp.text = i.dailyForecast?.get(1)?.tmp?.max
+            forecast_day2.forecast_lowtemp.text = i.dailyForecast?.get(1)?.tmp?.min
+
+            forecast_day3.forecast_date.text = i.dailyForecast?.get(2)?.date
+            forecast_day3.forecast_weather.text = i.dailyForecast?.get(2)?.cond?.txtD
+            forecast_day3.forecast_hightemp.text = i.dailyForecast?.get(2)?.tmp?.max
+            forecast_day3.forecast_lowtemp.text = i.dailyForecast?.get(2)?.tmp?.min
 
             aqi_index_pm25_value.text = i.aqi.city.pm
             aqi_index_air_value.text = i.aqi.city.qlty
@@ -274,8 +279,17 @@ class WeatherActivity : AppCompatActivity() {
                 Toast.makeText(context, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
                 //不响应任何事件处理
             }
+            R.id.app_bar_refresh -> {
+                Toast.makeText(context, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
+                //不响应任何事件处理
+            }
+            android.R.id.home -> {//一定需要加android,不然无效，这个不是资源，而是android系统自定义的值
+                Toast.makeText(context, "Hi home AS UP", Toast.LENGTH_SHORT).show()
+                drawer_layout.openDrawer(GravityCompat.START)
+                //drawer_layout.closeDrawers()
+            }
             else ->{//R.id.app_bar_refresh
-                    Toast.makeText(context, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Hi other", Toast.LENGTH_SHORT).show()
             }
         }
 

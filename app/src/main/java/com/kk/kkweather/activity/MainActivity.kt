@@ -106,15 +106,17 @@ class MainActivity : AppCompatActivity() {
 
         LogUtil.i("KW-MainActivity", "MainActivity onCreate")
 
+        Toast.makeText(context, "Hi MainActivity onCreate", Toast.LENGTH_SHORT).show()
+
         if (true == tryToStartWeatherActivity())
         {
             LogUtil.i("KW-MainActivity", "Successful to start WeatherActivity")
             return
         }
 
-//        LocalDateInitProvince()
-//        LocalDateInitCity()
-//        LocalDateInitCounty()
+        LocalDateInitProvince()
+        LocalDateInitCity()
+        LocalDateInitCounty()
 
         val linearLayoutManager = LinearLayoutManager(this)
         //        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -128,6 +130,42 @@ class MainActivity : AppCompatActivity() {
 
         setBackButtionListener(this)
         setAreaAdapterListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Toast.makeText(context, "Hi MainActivity onStart", Toast.LENGTH_SHORT).show()
+        LogUtil.i("KW-MainActivity", "MainActivity onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(context, "Hi MainActivity onResume", Toast.LENGTH_SHORT).show()
+        LogUtil.i("KW-MainActivity", "MainActivity onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Toast.makeText(context, "Hi MainActivity onPause", Toast.LENGTH_SHORT).show()
+        LogUtil.i("KW-MainActivity", "MainActivity onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Toast.makeText(context, "Hi MainActivity onStop", Toast.LENGTH_SHORT).show()
+        LogUtil.i("KW-MainActivity", "MainActivity onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(context, "Hi MainActivity onDestroy", Toast.LENGTH_SHORT).show()
+        LogUtil.i("KW-MainActivity", "MainActivity onDestroy")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Toast.makeText(context, "Hi MainActivity onRestart", Toast.LENGTH_SHORT).show()
+        LogUtil.i("KW-MainActivity", "MainActivity onRestart")
     }
 
     private fun tryToStartWeatherActivity() : Boolean{
