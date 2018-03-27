@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -286,7 +287,10 @@ class WeatherActivity : AppCompatActivity() {
             android.R.id.home -> {//一定需要加android,不然无效，这个不是资源，而是android系统自定义的值
                 Toast.makeText(context, "Hi home AS UP", Toast.LENGTH_SHORT).show()
                 drawer_layout.openDrawer(GravityCompat.START)
+                //val v: View = LayoutInflater.from(context).inflate(R.layout.activity_main, weather_main, false) 不行
                 //drawer_layout.closeDrawers()
+                //setContentView(R.layout.activity_main) 不行
+                //MainActivity.actionStart(context, "qinghai", "CNXYX", "123456") 可以调出画面
             }
             else ->{//R.id.app_bar_refresh
                 Toast.makeText(context, "Hi other", Toast.LENGTH_SHORT).show()

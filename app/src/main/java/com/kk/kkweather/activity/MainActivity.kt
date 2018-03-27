@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.support.v7.widget.LinearLayoutManager
@@ -52,6 +53,14 @@ class MainActivity : AppCompatActivity() {
         val LEVEL_COUNTRY : Int = 3
         val LEVEL_WEATHER : Int = 4
         var areaList : MutableList<AreaItem> = mutableListOf()
+
+        fun actionStart(context : Context, data_Country : String, data_WeatherId : String, flag : String){
+            val intent : Intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("weatherId1", data_WeatherId)
+            intent.putExtra("country1", data_Country)
+            intent.putExtra("flag", flag)
+            context.startActivity(intent)
+        }
     }
 
     private fun LocalDateInitProvince(){
@@ -114,9 +123,9 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        LocalDateInitProvince()
-        LocalDateInitCity()
-        LocalDateInitCounty()
+//        LocalDateInitProvince()
+//        LocalDateInitCity()
+//        LocalDateInitCounty()
 
         val linearLayoutManager = LinearLayoutManager(this)
         //        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -170,17 +179,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun tryToStartWeatherActivity() : Boolean{
         //后续可以根据定位来确定，或者根据设置来确定城市
-        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        var i = prefs.getString("weatherId", null)
-        var j = prefs.getString("country", null)
-        var ret = false
-        if (i != null)
-        {
-            WeatherActivity.actionStart(context, j, i)
-            finish()
-            ret = true
-        }
-        return ret
+//        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+//        var i = prefs.getString("weatherId", null)
+//        var j = prefs.getString("country", null)
+//        var ret = false
+//        if (i != null)
+//        {
+//            WeatherActivity.actionStart(context, j, i)
+//            finish()
+//            ret = true
+//        }
+//        return ret
+
+        return false
     }
 
     private fun setBackButtionListener(ctx:Context) {
