@@ -242,61 +242,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
-            <LinearLayout
+            <include
                 android:id="@+id/aqi_index_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                layout="@layout/aqi_item"
+                />
 
-                <TextView
-                    android:id="@+id/aqi_index_pm25"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="PM2.5"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/aqi_index_air"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="空气指数"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/aqi_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/aqi_index_pm25_value"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="59"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <TextView
-                    android:id="@+id/aqi_index_air_value"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="36"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-            </LinearLayout>
+            <include
+                android:id="@+id/aqi_index_value"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                layout="@layout/aqi_item"
+                />
 
             <ImageView
                 android:id="@+id/image_bgdown"

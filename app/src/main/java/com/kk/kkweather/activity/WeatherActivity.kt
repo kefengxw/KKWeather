@@ -19,6 +19,7 @@ import com.kk.kkweather.gson.HeWeatherItem
 import com.kk.kkweather.gson.JsonWeather
 import com.kk.kkweather.util.HttpUtil
 import com.kk.kkweather.util.LogUtil
+import kotlinx.android.synthetic.main.aqi_item.view.*
 import kotlinx.android.synthetic.main.forecast_item.view.*
 import kotlinx.android.synthetic.main.switch_item.*
 import kotlinx.android.synthetic.main.weather_main.*
@@ -215,9 +216,10 @@ class WeatherActivity : AppCompatActivity() {
             forecast_day3.forecast_weather.text = i.dailyForecast?.get(2)?.cond?.txtD
             forecast_day3.forecast_hightemp.text = i.dailyForecast?.get(2)?.tmp?.max
             forecast_day3.forecast_lowtemp.text = i.dailyForecast?.get(2)?.tmp?.min
-
-            aqi_index_pm25_value.text = i.aqi.city.pm
-            aqi_index_air_value.text = i.aqi.city.qlty
+            
+            aqi_index_value.aqi_index_pm25.text = i.aqi.city.pm
+            aqi_index_value.aqi_index_air.text = i.aqi.city.pm
+            //aqi_index_air_value.text = i.aqi.city.qlty
             life_suggestions_content_comf.text = "舒适度: " + i.suggestion.comf.txt
             life_suggestions_content_sport.text = "运动指数: " + i.suggestion.sport.txt
             life_suggestions_content_car.text = "洗车建议: " + i.suggestion.cw.txt
