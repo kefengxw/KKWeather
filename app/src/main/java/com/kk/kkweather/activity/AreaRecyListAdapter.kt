@@ -8,14 +8,15 @@ import android.view.ViewGroup
 import com.kk.kkweather.R
 import com.kk.kkweather.util.LogUtil
 import kotlinx.android.synthetic.main.area_item.view.*
+import java.security.AccessController.getContext
 
 /**
  * Created by xxnfd on 25/03/2018.
  */
-class AreaRecyListAdapter(areaAllList:MutableList<AreaItem>, ctx: Context) : RecyclerView.Adapter<AreaRecyListAdapter.AreaViewHolder>(), View.OnClickListener{
+class AreaRecyListAdapter(areaAllList:MutableList<AreaItem>, inctx: Context?) : RecyclerView.Adapter<AreaRecyListAdapter.AreaViewHolder>(), View.OnClickListener{
 
     var areaList = areaAllList
-    var context = ctx
+    var ctx = inctx //初始化的时候有可能是null
     private var mAreaItemClickListener: OnAreaItemClickListener? = null
 
     init {
@@ -34,8 +35,10 @@ class AreaRecyListAdapter(areaAllList:MutableList<AreaItem>, ctx: Context) : Rec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaViewHolder {
+        //在这里进行更新cnx，必须更新
+//        ctx = getContext()
 
-        val v: View = LayoutInflater.from(context).inflate(R.layout.area_item, parent, false)
+        val v: View = LayoutInflater.from(ctx).inflate(R.layout.area_item, parent, false)
         val vh = AreaViewHolder(v)
 //        vh.setIsRecyclable(false)
 //        viewType可以实现比较花哨的UI

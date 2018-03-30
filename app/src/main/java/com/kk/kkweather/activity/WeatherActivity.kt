@@ -5,25 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.kk.kkweather.R
-import com.kk.kkweather.R.id.toolBar
 import com.kk.kkweather.gson.HeWeatherItem
 import com.kk.kkweather.gson.JsonWeather
 import com.kk.kkweather.util.HttpUtil
 import com.kk.kkweather.util.LogUtil
 import kotlinx.android.synthetic.main.aqi_item.view.*
 import kotlinx.android.synthetic.main.forecast_item.view.*
-import kotlinx.android.synthetic.main.switch_item.*
 import kotlinx.android.synthetic.main.weather_main.*
-import kotlinx.android.synthetic.main.weather_main.view.*
 import kotlinx.android.synthetic.main.wmdrawerlayout.*
 import okhttp3.Call
 import okhttp3.Response
@@ -32,8 +27,6 @@ import java.io.IOException
 /**
  * Created by xxnfd on 25/03/2018.
  */
-//, CompoundButton.OnCheckedChangeListener
-
 class WeatherActivity : AppCompatActivity() {
 
     val context = this
@@ -48,11 +41,11 @@ class WeatherActivity : AppCompatActivity() {
     lateinit var jsonWeatherData : JsonWeather
 
     companion object {
-        fun actionStart(context : Context, data_Country : String, data_WeatherId : String){
+        fun actionStart(context: Context?, data_Country: String, data_WeatherId: String){
             val intent : Intent = Intent(context, WeatherActivity::class.java)
             intent.putExtra("weatherId", data_WeatherId)
             intent.putExtra("country", data_Country)
-            context.startActivity(intent)
+            context?.startActivity(intent)
         }
     }
 
@@ -143,7 +136,7 @@ class WeatherActivity : AppCompatActivity() {
 
         LogUtil.i("WeatherActivity", "Start to praseJsonWithGSON for weather!")
 
-        if (null == jsonData || (jsonData?.contains("error")!!)) {
+        if (null == jsonData || (jsonData?.contains("error"))) {
 
             usingDefaultWeatherInfo = true
             tryToUpdateWeatherActivityUi()//那就还是刷新一下吧
@@ -216,10 +209,10 @@ class WeatherActivity : AppCompatActivity() {
             forecast_day3.forecast_weather.text = i.dailyForecast?.get(2)?.cond?.txtD
             forecast_day3.forecast_hightemp.text = i.dailyForecast?.get(2)?.tmp?.max
             forecast_day3.forecast_lowtemp.text = i.dailyForecast?.get(2)?.tmp?.min
-            
+
             aqi_index_value.aqi_index_pm25.text = i.aqi.city.pm
             aqi_index_value.aqi_index_air.text = i.aqi.city.pm
-            //aqi_index_air_value.text = i.aqi.city.qlty
+
             life_suggestions_content_comf.text = "舒适度: " + i.suggestion.comf.txt
             life_suggestions_content_sport.text = "运动指数: " + i.suggestion.sport.txt
             life_suggestions_content_car.text = "洗车建议: " + i.suggestion.cw.txt
@@ -288,7 +281,7 @@ class WeatherActivity : AppCompatActivity() {
             }
             android.R.id.home -> {//一定需要加android,不然无效，这个不是资源，而是android系统自定义的值
                 Toast.makeText(context, "Hi home AS UP", Toast.LENGTH_SHORT).show()
-                drawer_layout.openDrawer(GravityCompat.START)
+                weather_main_drawer_layout.openDrawer(GravityCompat.START)
                 //val v: View = LayoutInflater.from(context).inflate(R.layout.activity_main, weather_main, false) 不行
                 //drawer_layout.closeDrawers()
                 //setContentView(R.layout.activity_main) 不行
