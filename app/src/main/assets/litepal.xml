@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+
+    <dbname value="kkweather" />
+    <version value="1" />
+
+    <list>
+        <mapping class="com.kk.kkweather.db.dbProvince" />
+        <mapping class="com.kk.kkweather.db.dbCity" />
+        <mapping class="com.kk.kkweather.db.dbCounty" />
+    </list>
+
+</litepal>

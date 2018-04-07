@@ -15,8 +15,8 @@ import java.security.AccessController.getContext
  */
 class AreaRecyListAdapter(areaAllList:MutableList<AreaItem>, inctx: Context?) : RecyclerView.Adapter<AreaRecyListAdapter.AreaViewHolder>(), View.OnClickListener{
 
-    var areaList = areaAllList
     var ctx = inctx //初始化的时候有可能是null
+    var areaList = areaAllList
     private var mAreaItemClickListener: OnAreaItemClickListener? = null
 
     init {

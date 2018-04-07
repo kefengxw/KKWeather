@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kk.kkweather.R
+import com.kk.kkweather.db.dbProvince
 import com.kk.kkweather.gson.JsonCity
 import com.kk.kkweather.gson.JsonCountry
 import com.kk.kkweather.gson.JsonProvince
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.area_main_fragment.*
 import kotlinx.android.synthetic.main.area_main_fragment.view.*
 import okhttp3.Call
 import okhttp3.Response
+import org.litepal.crud.DataSupport
 import java.io.IOException
 
 /**
@@ -124,12 +126,6 @@ class AreaMainFragment : Fragment() {
 
         Toast.makeText(ctx, "Hi MainActivity onCreate", Toast.LENGTH_SHORT).show()
 
-        if (true == tryToStartWeatherActivity())
-        {
-            LogUtil.i("AreaMainFragment", "Successful to start WeatherActivity")
-            return view
-        }
-
 //        LocalDateInitProvince()
 //        LocalDateInitCity()
 //        LocalDateInitCounty()
@@ -151,23 +147,6 @@ class AreaMainFragment : Fragment() {
         setAreaAdapterListener()
 
         return view
-    }
-
-    private fun tryToStartWeatherActivity() : Boolean{
-        //后续可以根据定位来确定，或者根据设置来确定城市
-//        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-//        var i = prefs.getString("weatherId", null)
-//        var j = prefs.getString("country", null)
-//        var ret = false
-//        if (i != null)
-//        {
-//            WeatherActivity.actionStart(cox, j, i)
-//            finish()
-//            ret = true
-//        }
-//        return ret
-
-        return false
     }
 
     private fun setBackButtionListener(ctx: Context?) {
@@ -197,6 +176,20 @@ class AreaMainFragment : Fragment() {
                         selectProvince = areaList[position].name
                         selectProvinceId = areaList[position].id
                         switchToCityActivity(ctx, areaList[position].name, areaList[position].id)
+
+
+//                        var dbp = dbProvince()
+//                        dbp.id = 50
+//                        dbp.provinceName = "jiangsu50"
+//                        dbp.proviceCode = 50
+//                        dbp.save()
+//
+//
+//                        val ii : List<dbProvince> = DataSupport.findAll(dbProvince::class.java)
+//                        for(x in ii){
+//                            LogUtil.i("xxx","yyy")
+//                        }
+
                     }
                     LEVEL_CITY -> {
                         Toast.makeText(ctx, "Hi Click City- ${areaList[position].name}", Toast.LENGTH_SHORT).show()
@@ -269,7 +262,7 @@ class AreaMainFragment : Fragment() {
         editor.putString("weatherId", weatherId)
         editor.apply()
 
-        getActivity()?.finish();
+        getActivity()?.finish()
     }
 
     private fun backToCityActivity(ctx: Context?)

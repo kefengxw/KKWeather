@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.weather_main.*
 import kotlinx.android.synthetic.main.wmdrawerlayout.*
 import okhttp3.Call
 import okhttp3.Response
+import org.litepal.LitePal
 import java.io.IOException
 
 /**
@@ -29,7 +30,7 @@ import java.io.IOException
  */
 class WeatherActivity : AppCompatActivity() {
 
-    val context = this
+    val ctx = this
     val weatherAddrHead = "http://guolin.tech/api/weather/?cityid="
     val authKey = "9ff41582de514a658ac5f523363a6d08"
     var picbgAddr : String = ""
@@ -41,11 +42,11 @@ class WeatherActivity : AppCompatActivity() {
     lateinit var jsonWeatherData : JsonWeather
 
     companion object {
-        fun actionStart(context: Context?, data_Country: String, data_WeatherId: String){
-            val intent : Intent = Intent(context, WeatherActivity::class.java)
+        fun actionStart(ctx: Context?, data_Country: String, data_WeatherId: String){
+            val intent : Intent = Intent(ctx, WeatherActivity::class.java)
             intent.putExtra("weatherId", data_WeatherId)
             intent.putExtra("country", data_Country)
-            context?.startActivity(intent)
+            ctx?.startActivity(intent)
         }
     }
 
@@ -60,7 +61,7 @@ class WeatherActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home)
 
-        LogUtil.i("WeatherActivity", "onCreate: ${context}")
+        LogUtil.i("WeatherActivity", "onCreate: ${ctx}")
 
         val currentCountry : String = intent.getStringExtra("country")
         val currentWeatherId : String = intent.getStringExtra("weatherId")
@@ -79,6 +80,7 @@ class WeatherActivity : AppCompatActivity() {
         queryWeatherInfo(weatherAddr)
         queryBackgroundPic(backgroundPicAddr)
 
+        setCityHomeButtionListener(ctx)
         //switch_debug.setOnCheckedChangeListener(this)
     }
 
@@ -158,12 +160,12 @@ class WeatherActivity : AppCompatActivity() {
                 override fun run() {
                     //backgroundPic.setImageResource()
                     if ("" != picbgAddr) {
-                        Glide.with(context).load(picbgAddr).into(backgroundPic)
+                        Glide.with(ctx).load(picbgAddr).into(backgroundPic)
                     }
                     else
                     {
                         //使用本地的pic,后续补充101
-                        //Glide.with(context).load(picbgAddr).into(backgroundPic)
+                        //Glide.with(ctx).load(picbgAddr).into(backgroundPic)
                     }
 
                     if (false == usingDefaultWeatherInfo) {
@@ -262,33 +264,33 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu : Menu): Boolean{
         menuInflater.inflate(R.menu.toolbaritem, menu)
-        //Toast.makeText(context, "Hi onCreateOptionsMenu", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(ctx, "Hi onCreateOptionsMenu", Toast.LENGTH_SHORT).show()
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId){
             R.id.app_bar_shot -> {
-                Toast.makeText(context, "Hi app_bar_shot", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, "Hi app_bar_shot", Toast.LENGTH_SHORT).show()
             }
             R.id.app_bar_setting -> {
-                Toast.makeText(context, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
                 //不响应任何事件处理
             }
             R.id.app_bar_refresh -> {
-                Toast.makeText(context, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
                 //不响应任何事件处理
             }
             android.R.id.home -> {//一定需要加android,不然无效，这个不是资源，而是android系统自定义的值
-                Toast.makeText(context, "Hi home AS UP", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, "Hi home AS UP", Toast.LENGTH_SHORT).show()
                 weather_main_drawer_layout.openDrawer(GravityCompat.START)
-                //val v: View = LayoutInflater.from(context).inflate(R.layout.activity_main, weather_main, false) 不行
+                //val v: View = LayoutInflater.from(ctx).inflate(R.layout.activity_main, weather_main, false) 不行
                 //drawer_layout.closeDrawers()
                 //setContentView(R.layout.activity_main) 不行
-                //MainActivity.actionStart(context, "qinghai", "CNXYX", "123456") 可以调出画面
+                //MainActivity.actionStart(ctx, "qinghai", "CNXYX", "123456") 可以调出画面
             }
             else ->{//R.id.app_bar_refresh
-                Toast.makeText(context, "Hi other", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, "Hi other", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -296,6 +298,14 @@ class WeatherActivity : AppCompatActivity() {
     }
 
 //    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-//        Toast.makeText(context, "Hi switch", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(ctx, "Hi switch", Toast.LENGTH_SHORT).show()
 //    }
+
+    private fun setCityHomeButtionListener(ctx: Context?) {
+        weather_cityhome.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                LitePal.getDatabase()
+            }
+        })
+    }
 }
