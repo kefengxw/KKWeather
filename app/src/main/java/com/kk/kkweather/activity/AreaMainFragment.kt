@@ -15,6 +15,8 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kk.kkweather.R
+import com.kk.kkweather.db.dbCity
+import com.kk.kkweather.db.dbCounty
 import com.kk.kkweather.db.dbProvince
 import com.kk.kkweather.gson.JsonCity
 import com.kk.kkweather.gson.JsonCountry
@@ -27,6 +29,9 @@ import okhttp3.Call
 import okhttp3.Response
 import org.litepal.crud.DataSupport
 import java.io.IOException
+import android.provider.ContactsContract.CommonDataKinds.Phone
+
+
 
 /**
  * Created by xxnfd on 28/03/2018.
@@ -47,7 +52,9 @@ class AreaMainFragment : Fragment() {
     var selectProvince : String = "美国101"
     var selectProvinceId :Int = 0
     var selectCity : String = "加利福尼亚102"
+    var selectCityId : Int = 0
     var selectCountry : String = "乡村1号103"
+    var selectCountryId : Int = 0
 
     val URL_OF_AREA : String = "http://guolin.tech/api/china"
 
@@ -175,25 +182,13 @@ class AreaMainFragment : Fragment() {
                         Toast.makeText(ctx, "Hi Click Province - ${areaList[position].name}, Position:${position}", Toast.LENGTH_SHORT).show()
                         selectProvince = areaList[position].name
                         selectProvinceId = areaList[position].id
+
                         switchToCityActivity(ctx, areaList[position].name, areaList[position].id)
-
-
-//                        var dbp = dbProvince()
-//                        dbp.id = 50
-//                        dbp.provinceName = "jiangsu50"
-//                        dbp.proviceCode = 50
-//                        dbp.save()
-//
-//
-//                        val ii : List<dbProvince> = DataSupport.findAll(dbProvince::class.java)
-//                        for(x in ii){
-//                            LogUtil.i("xxx","yyy")
-//                        }
-
                     }
                     LEVEL_CITY -> {
                         Toast.makeText(ctx, "Hi Click City- ${areaList[position].name}", Toast.LENGTH_SHORT).show()
                         selectCity = areaList[position].name
+                        selectCityId = areaList[position].id
 
                         switchToCountyActivity(ctx, areaList[position].name, selectProvinceId, areaList[position].id)
                     }
@@ -290,6 +285,7 @@ class AreaMainFragment : Fragment() {
     }
 
     private fun queryProvinceInfo() {
+        //if ()
         val address: String = URL_OF_AREA
         queryAreaInfo(address)
     }
@@ -323,7 +319,7 @@ class AreaMainFragment : Fragment() {
         })
     }
 
-    private fun parseJsonWithGSONforAreaList(jsonData:String?){
+    private fun parseJsonWithGSONforAreaList(jsonData:String?) {
 
         LogUtil.i("HttpCallback", "Start to praseJsonWithGSON for AreaInfo")
 
@@ -336,10 +332,20 @@ class AreaMainFragment : Fragment() {
                 val myType = object : TypeToken<MutableList<JsonProvince>>(){}.type
                 val numbers: MutableList<JsonProvince> = gson.fromJson(jsonData, myType)
 
-                for (i : JsonProvince in numbers)
-                {
+                for (i : JsonProvince in numbers) {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
                     areaList.add(AreaItem(i.name, id = i.id))
+
+                    //看看有无，有更新，无添加，数据库中多余的如何处理？删除
+                    //这里无条件更新数据库的查找，在外边控制逻辑，从软件维护和后续升级的角度考虑，不适合在这里做控制
+                    val dbplist : List<dbProvince> = DataSupport.where("provinceCode=?", "${i.id}").find(dbProvince::class.java)
+                    val dbp = dbProvince(provinceCode = i.id, provinceName = i.name)
+                    //for(x in ii){ LogUtil.i("xxx","yyy") }
+                    if (0 == dbplist.size) {
+                        dbp.save()
+                    } else {
+                        dbp.updateAll("provinceCode=?", "${i.id}")
+                    }
                 }
             }
 
@@ -351,6 +357,14 @@ class AreaMainFragment : Fragment() {
                 {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
                     areaList.add(AreaItem(i.name, id = i.id))
+
+                    val dbcilist : List<dbCity> = DataSupport.where("cityCode=?", "${i.id}").find(dbCity::class.java)
+                    val dbci = dbCity(cityCode = i.id, cityName = i.name, provinceCode = selectProvinceId)
+                    if (0 == dbcilist.size) {
+                        dbci.save()
+                    } else {
+                        dbci.updateAll("cityCode=?", "${i.id}")
+                    }
                 }
             }
 
@@ -362,6 +376,14 @@ class AreaMainFragment : Fragment() {
                 {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name} + ${i.weather_id}")
                     areaList.add(AreaItem(i.name, id = i.id, weatherId = i.weather_id))
+
+                    val dbcilist : List<dbCounty> = DataSupport.where("countryCode=?", "${i.id}").find(dbCounty::class.java)
+                    val dbco = dbCounty(countryCode = i.id, countyName = i.name, cityCode = selectCityId, weatherCode = i.weather_id)
+                    if (0 == dbcilist.size) {
+                        dbco.save()
+                    } else {
+                        dbco.updateAll("countryCode=?", "${i.id}")
+                    }
                 }
             }
         }
