@@ -473,6 +473,7 @@ class AreaMainFragment : Fragment() {
 
     private fun refreshAreaListDataOnUI(){
         areaListView.adapter.notifyDataSetChanged()
+        areaListView.getLayoutManager().scrollToPosition(0)
     }
 
     private fun queryAreaInfofromDatabaseAndRefreshDataOnUIfromSubThread(inputId : Int){

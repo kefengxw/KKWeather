@@ -171,145 +171,151 @@
         app:layout_constraintStart_toEndOf="@+id/weather_degree_now"
         />
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="@+id/guidelineh"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/swipe_refresh"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="72dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="@+id/guidelineh"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
 
-            <TextView
-                android:id="@+id/forecast"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="预报"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <include
-                android:id="@+id/forecast_day1"
                 android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                layout="@layout/forecast_item"
-                />
+                android:orientation="vertical">
 
-            <include
-                android:id="@+id/forecast_day2"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                layout="@layout/forecast_item"
-                />
+                <TextView
+                    android:id="@+id/forecast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="预报"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <include
-                android:id="@+id/forecast_day3"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                layout="@layout/forecast_item"
-                />
+                <include
+                    android:id="@+id/forecast_day1"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    layout="@layout/forecast_item"
+                    />
 
-            <ImageView
-                android:id="@+id/image_bgup"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/background_light"
-                android:textSize="8sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                <include
+                    android:id="@+id/forecast_day2"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    layout="@layout/forecast_item"
+                    />
 
-            <TextView
-                android:id="@+id/aqi_index"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="AQI Index"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                <include
+                    android:id="@+id/forecast_day3"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    layout="@layout/forecast_item"
+                    />
 
-            <include
-                android:id="@+id/aqi_index_desc"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                layout="@layout/aqi_item"
-                />
+                <ImageView
+                    android:id="@+id/image_bgup"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@android:color/background_light"
+                    android:textSize="8sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
-            <include
-                android:id="@+id/aqi_index_value"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                layout="@layout/aqi_item"
-                />
+                <TextView
+                    android:id="@+id/aqi_index"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="AQI Index"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
-            <ImageView
-                android:id="@+id/image_bgdown"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@android:color/background_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:background="@android:color/background_light" />
+                <include
+                    android:id="@+id/aqi_index_desc"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    layout="@layout/aqi_item"
+                    />
 
-            <TextView
-                android:id="@+id/life_suggestions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="生活建议"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                <include
+                    android:id="@+id/aqi_index_value"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    layout="@layout/aqi_item"
+                    />
 
-            <TextView
-                android:id="@+id/life_suggestions_content_comf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="舒适度"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                <ImageView
+                    android:id="@+id/image_bgdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@android:color/background_light"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:background="@android:color/background_light" />
 
-            <TextView
-                android:id="@+id/life_suggestions_content_sport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="室内运动"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                <TextView
+                    android:id="@+id/life_suggestions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="生活建议"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
-            <TextView
-                android:id="@+id/life_suggestions_content_car"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="适合洗车"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                <TextView
+                    android:id="@+id/life_suggestions_content_comf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="舒适度"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
-        </LinearLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/life_suggestions_content_sport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="室内运动"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/life_suggestions_content_car"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="适合洗车"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
 </android.support.constraint.ConstraintLayout>
