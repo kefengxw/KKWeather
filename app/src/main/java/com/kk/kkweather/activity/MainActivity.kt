@@ -30,15 +30,17 @@ class MainActivity : AppCompatActivity() {
     private fun tryToStartWeatherActivity() : Boolean{
         //后续可以根据定位来确定，或者根据设置来确定城市
         var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
-        var i = prefs.getString("weatherId", null)
-        var j = prefs.getString("country", null)
+        var wid = prefs.getString("weatherId", null)
+        var cou = prefs.getString("country", null)
         var ret = false
-        if (i != null)
+        if (wid != null)
         {
-            WeatherActivity.actionStart(ctx, j, i)
-            this.finish()
+            WeatherActivity.actionStartWA(ctx, cou, wid)
+            AreaMainFragment.activityType = AreaMainFragment.ACTIVITY_TYPE_WEATHER_DRAWER_ACTIVITY
+            this.finish()//close area main activity
             ret = true
         }
+        AreaMainFragment.activityType = AreaMainFragment.ACTIVITY_TYPE_AREA_MAIN_ACTIVITY
         return ret
     }
 

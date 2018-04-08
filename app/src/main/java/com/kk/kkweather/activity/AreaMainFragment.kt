@@ -43,18 +43,18 @@ class AreaMainFragment : Fragment() {
     lateinit var currentView : View
     lateinit var areaAdapter : AreaRecyListAdapter
 
-    var areaListProvince : MutableList<AreaItem> = mutableListOf()
-    var areaListCity : MutableList<AreaItem> = mutableListOf()
-    var areaListCountry : MutableList<AreaItem> = mutableListOf()
+//    var areaListProvince : MutableList<AreaItem> = mutableListOf()
+//    var areaListCity : MutableList<AreaItem> = mutableListOf()
+//    var areaListCountry : MutableList<AreaItem> = mutableListOf()
 
     var currentLevel : Int = LEVEL_PROVINCE
 
-    var selectProvince : String = "美国101"
+    var selectProvince : String = ""
     var selectProvinceId :Int = 0
-    var selectCity : String = "加利福尼亚102"
+    var selectCity : String = ""
     var selectCityId : Int = 0
-    var selectCountry : String = "乡村1号103"
-    var selectCountryId : Int = 0
+//    var selectCountry : String = "乡村1号103"
+//    var selectCountryId : Int = 0
 
     val URL_OF_AREA : String = "http://guolin.tech/api/china"
 
@@ -64,61 +64,63 @@ class AreaMainFragment : Fragment() {
         val LEVEL_COUNTRY : Int = 3
         val LEVEL_WEATHER : Int = 4
         var areaList : MutableList<AreaItem> = mutableListOf()
-
-        fun actionStart(context : Context, data_Country : String, data_WeatherId : String, flag : String){
-            val intent : Intent = Intent(context, MainActivity::class.java)
-            intent.putExtra("weatherId1", data_WeatherId)
-            intent.putExtra("country1", data_Country)
-            intent.putExtra("flag", flag)
-            context.startActivity(intent)
-        }
+        var activityType : Int = 0//Default 0 (AreaMainAcitivity), 1 (WeatherAcitivity)
+        val ACTIVITY_TYPE_AREA_MAIN_ACTIVITY : Int = 0
+        val ACTIVITY_TYPE_WEATHER_DRAWER_ACTIVITY : Int = 1
+//        fun actionStartAF(context : Context, data_Country : String, data_WeatherId : String, flag : String){
+//            val intent : Intent = Intent(context, MainActivity::class.java)
+//            intent.putExtra("weatherId1", data_WeatherId)
+//            intent.putExtra("country1", data_Country)
+//            intent.putExtra("flag", flag)
+//            context.startActivity(intent)
+//        }
     }
 
-    private fun LocalDateInitProvince(){
-//        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
-        areaListProvince.add(AreaItem("01Sweden"))
-        areaListProvince.add(AreaItem("02加拿大"))
-        areaListProvince.add(AreaItem("03佛得角"))
-        areaListProvince.add(AreaItem("04开曼群岛"))
-        areaListProvince.add(AreaItem("05中非共和国"))
-        areaListProvince.add(AreaItem("06乍得"))
-        areaListProvince.add(AreaItem("07智利"))
-        areaListProvince.add(AreaItem("08中国"))
-        areaListProvince.add(AreaItem("09斐济"))
-        areaListProvince.add(AreaItem("10芬兰"))
-        areaListProvince.add(AreaItem("11法国"))
-        areaListProvince.add(AreaItem("12法属圭亚那"))
-        areaListProvince.add(AreaItem("13法属波利尼西亚"))
-        areaListProvince.add(AreaItem("14加蓬"))
-        areaListProvince.add(AreaItem("15冈比亚"))
-        areaListProvince.add(AreaItem("16格鲁吉亚"))
-        areaListProvince.add(AreaItem("17德国"))
-    }
-
-    private fun LocalDateInitCity() {
-//        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
-        areaListCity.add(AreaItem("01南通"))
-        areaListCity.add(AreaItem("02苏州"))
-        areaListCity.add(AreaItem("03无锡"))
-        areaListCity.add(AreaItem("04徐州"))
-        areaListCity.add(AreaItem("05常州"))
-        areaListCity.add(AreaItem("06镇江"))
-        areaListCity.add(AreaItem("07扬州"))
-        areaListCity.add(AreaItem("08连云港"))
-        areaListCity.add(AreaItem("09宿迁"))
-        areaListCity.add(AreaItem("10南京"))
-        areaListCity.add(AreaItem("11盐城"))
-        areaListCity.add(AreaItem("12Stockholm"))
-    }
-
-    private fun LocalDateInitCounty() {
-//        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
-        areaListCountry.add(AreaItem("01海安"))
-        areaListCountry.add(AreaItem("02东台"))
-        areaListCountry.add(AreaItem("03如东"))
-        areaListCountry.add(AreaItem("04启东"))
-        areaListCountry.add(AreaItem("05闸港"))
-    }
+//    private fun LocalDateInitProvince(){
+////        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
+//        areaListProvince.add(AreaItem("01Sweden"))
+//        areaListProvince.add(AreaItem("02加拿大"))
+//        areaListProvince.add(AreaItem("03佛得角"))
+//        areaListProvince.add(AreaItem("04开曼群岛"))
+//        areaListProvince.add(AreaItem("05中非共和国"))
+//        areaListProvince.add(AreaItem("06乍得"))
+//        areaListProvince.add(AreaItem("07智利"))
+//        areaListProvince.add(AreaItem("08中国"))
+//        areaListProvince.add(AreaItem("09斐济"))
+//        areaListProvince.add(AreaItem("10芬兰"))
+//        areaListProvince.add(AreaItem("11法国"))
+//        areaListProvince.add(AreaItem("12法属圭亚那"))
+//        areaListProvince.add(AreaItem("13法属波利尼西亚"))
+//        areaListProvince.add(AreaItem("14加蓬"))
+//        areaListProvince.add(AreaItem("15冈比亚"))
+//        areaListProvince.add(AreaItem("16格鲁吉亚"))
+//        areaListProvince.add(AreaItem("17德国"))
+//    }
+//
+//    private fun LocalDateInitCity() {
+////        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
+//        areaListCity.add(AreaItem("01南通"))
+//        areaListCity.add(AreaItem("02苏州"))
+//        areaListCity.add(AreaItem("03无锡"))
+//        areaListCity.add(AreaItem("04徐州"))
+//        areaListCity.add(AreaItem("05常州"))
+//        areaListCity.add(AreaItem("06镇江"))
+//        areaListCity.add(AreaItem("07扬州"))
+//        areaListCity.add(AreaItem("08连云港"))
+//        areaListCity.add(AreaItem("09宿迁"))
+//        areaListCity.add(AreaItem("10南京"))
+//        areaListCity.add(AreaItem("11盐城"))
+//        areaListCity.add(AreaItem("12Stockholm"))
+//    }
+//
+//    private fun LocalDateInitCounty() {
+////        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
+//        areaListCountry.add(AreaItem("01海安"))
+//        areaListCountry.add(AreaItem("02东台"))
+//        areaListCountry.add(AreaItem("03如东"))
+//        areaListCountry.add(AreaItem("04启东"))
+//        areaListCountry.add(AreaItem("05闸港"))
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -140,23 +142,23 @@ class AreaMainFragment : Fragment() {
         areaAdapter = AreaRecyListAdapter(areaList, ctx)
 
         val linearLayoutManager = LinearLayoutManager(ctx)
-        //        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        //        areaList.layoutManager = GridLayoutManager(this,3)
+        //linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        //areaList.layoutManager = GridLayoutManager(this,3)
         areaListView = currentView.area_main_recylistview
 
         areaListView.layoutManager = linearLayoutManager//LinearLayoutManager(this)
 
         areaListView.adapter = areaAdapter
 
-        switchToProvinceActivity(ctx)//必须在这个之前调用，否则非法访问areaList
+        switchToProvinceActivity()//必须在这个之前调用，否则非法访问areaList
 
-        setBackButtionListener(ctx)
+        setBackButtionListener()
         setAreaAdapterListener()
 
         return view
     }
 
-    private fun setBackButtionListener(ctx: Context?) {
+    private fun setBackButtionListener() {
         currentView.area_main_title_backbutton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 when (currentLevel) {
@@ -164,10 +166,10 @@ class AreaMainFragment : Fragment() {
                         //do nothing
                     }
                     LEVEL_CITY -> {
-                        backToProvinceActivity(ctx)
+                        backToProvinceActivity()
                     }
                     LEVEL_COUNTRY -> {
-                        backToCityActivity(ctx)
+                        backToCityActivity()
                     }
                 }
             }
@@ -183,14 +185,14 @@ class AreaMainFragment : Fragment() {
                         selectProvince = areaList[position].name
                         selectProvinceId = areaList[position].id
 
-                        switchToCityActivity(ctx, areaList[position].name, areaList[position].id)
+                        switchToCityActivity(areaList[position].name, areaList[position].id)
                     }
                     LEVEL_CITY -> {
                         Toast.makeText(ctx, "Hi Click City- ${areaList[position].name}", Toast.LENGTH_SHORT).show()
                         selectCity = areaList[position].name
                         selectCityId = areaList[position].id
 
-                        switchToCountyActivity(ctx, areaList[position].name, selectProvinceId, areaList[position].id)
+                        switchToCountyActivity(areaList[position].name, selectProvinceId, areaList[position].id)
                     }
                     LEVEL_COUNTRY -> {
                         switchToWeatherActivity(ctx, areaList[position].name, areaList[position].weatherId)
@@ -200,107 +202,174 @@ class AreaMainFragment : Fragment() {
         })
     }
 
-    private fun switchToProvinceActivity(ctx: Context?)
+    private fun switchToProvinceActivity()
     {
         //areaListProvince.clear()//第一次清空省份信息，只是做测试使用
-        areaList.clear()
-        if (areaListProvince.isEmpty()){
-            queryProvinceInfo()
-        }else{
-            for(i in areaListProvince)  areaList.add(i)
-            areaListView.adapter.notifyDataSetChanged()
-        }
+//        areaList.clear()
+//        if (areaListProvince.isEmpty()){
+//            queryProvinceInfo()
+//        }else{
+//            for(i in areaListProvince)  areaList.add(i)
+//            areaListView.adapter.notifyDataSetChanged()
+//        }
+        currentLevel = LEVEL_PROVINCE
+
+        queryProvinceInfo()
 
         areaListView.setHasFixedSize(true)
-        currentLevel = LEVEL_PROVINCE
         currentView.area_main_title_backbutton.visibility = View.INVISIBLE
         currentView.area_main_title_text.text = "中国"
     }
 
-    private fun switchToCityActivity(ctx: Context?, province: String, provinceId: Int)
+    private fun switchToCityActivity(province: String, provinceId: Int)
     {
-        areaList.clear()
-        if (areaListCity.isEmpty()){
-            queryCityInfo(province, provinceId)
-        }else{
-            for(i in areaListCity)  areaList.add(i)
-            areaListView.adapter.notifyDataSetChanged()
-        }
-
+//        areaList.clear()
+//        if (areaListCity.isEmpty()){
+//            queryCityInfo(province, provinceId)
+//        }else{
+//            for(i in areaListCity)  areaList.add(i)
+//            areaListView.adapter.notifyDataSetChanged()
+//        }
         currentLevel = LEVEL_CITY
+
+        queryCityInfo(provinceId)
+
         currentView.area_main_title_backbutton.visibility = View.VISIBLE
         currentView.area_main_title_text.text = province
     }
 
-    private fun switchToCountyActivity(ctx: Context?, city: String, provinceId: Int, cityId: Int)
+    private fun switchToCountyActivity(city: String, provinceId: Int, cityId: Int)
     {
-        areaList.clear()
-        if (areaListCountry.isEmpty()){
-            queryCountyInfo(provinceId, cityId)
-        }else{
-            for(i in areaListCountry)  areaList.add(i)
-            areaListView.adapter.notifyDataSetChanged()
-        }
+//        areaList.clear()
+//        if (areaListCountry.isEmpty()){
+//            queryCountyInfo(provinceId, cityId)
+//        }else{
+//            for(i in areaListCountry)  areaList.add(i)
+//            areaListView.adapter.notifyDataSetChanged()
+//        }
 
         currentLevel = LEVEL_COUNTRY
+
+        queryCountyInfo(provinceId, cityId)
+
         currentView.area_main_title_backbutton.visibility = View.VISIBLE
         currentView.area_main_title_text.text = city
     }
 
     private fun switchToWeatherActivity(ctx: Context?, country: String, weatherId: String)
     {
+        //save local data without condition
         var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
-        WeatherActivity.actionStart(ctx, country, weatherId)
-        //保存到本地
         var editor : SharedPreferences.Editor = prefs.edit()
         editor.putString("country", country)
         editor.putString("weatherId", weatherId)
         editor.apply()
 
+        WeatherActivity.actionStartWA(ctx, country, weatherId)
         getActivity()?.finish()
+
+        if (AreaMainFragment.ACTIVITY_TYPE_AREA_MAIN_ACTIVITY == AreaMainFragment.activityType)
+        {   //from main area activity
+//            WeatherActivity.actionStartWA(ctx, country, weatherId)
+//            getActivity()?.finish()
+        }
+        else
+        {   //from layout drawer weather activity
+            //ctx.closeDrawers()
+        }
     }
 
-    private fun backToCityActivity(ctx: Context?)
+    private fun backToCityActivity()
     {
-        areaList.clear()
-        areaListCountry.clear()
-        for(i in areaListCity)  areaList.add(i)
-        areaListView.adapter.notifyDataSetChanged()
+//        areaList.clear()
+//        areaListCountry.clear()
+//        for(i in areaListCity)  areaList.add(i)
+//        areaListView.adapter.notifyDataSetChanged()
 
         currentLevel = LEVEL_CITY
         currentView.area_main_title_backbutton.visibility = View.VISIBLE
         currentView.area_main_title_text.text = selectProvince
+
+        queryAreaInfofromDatabaseAndRefreshDataOnUI(selectProvinceId)
     }
 
-    private fun backToProvinceActivity(ctx: Context?)
+    private fun backToProvinceActivity()
     {
-        areaList.clear()
-        areaListCity.clear()
-        for(i in areaListProvince)  areaList.add(i)
-        areaListView.adapter.notifyDataSetChanged()
+//        areaList.clear()
+//        areaListCity.clear()
+//        for(i in areaListProvince)  areaList.add(i)
+//        areaListView.adapter.notifyDataSetChanged()
 
         currentLevel = LEVEL_PROVINCE
         currentView.area_main_title_backbutton.visibility = View.INVISIBLE
         currentView.area_main_title_text.text = "中国"
+
+        queryAreaInfofromDatabaseAndRefreshDataOnUI(0)
     }
 
     private fun queryProvinceInfo() {
-        //if ()
-        val address: String = URL_OF_AREA
-        queryAreaInfo(address)
+        if (0 == DataSupport.count(dbProvince::class.java)) {
+            val address: String = URL_OF_AREA
+            queryAreaInfofromServer(address)
+        } else {
+            queryAreaInfofromDatabaseAndRefreshDataOnUI(0)
+        }
     }
 
-    private fun queryCityInfo(province : String, provinceId : Int) {
-        val address: String = URL_OF_AREA +"/${provinceId}"
-        queryAreaInfo(address)
+    private fun queryCityInfo(provinceId : Int) {
+        val dbcilist : List<dbCity> = DataSupport.where("provinceCode=?", "${provinceId}").find(dbCity::class.java)
+        if (0 == dbcilist.size) {
+            val address: String = URL_OF_AREA +"/${provinceId}"
+            queryAreaInfofromServer(address)
+        } else {
+            queryAreaInfofromDatabaseAndRefreshDataOnUI(provinceId)
+        }
     }
 
     private fun queryCountyInfo(provinceId: Int, cityId : Int) {
-        val address: String = URL_OF_AREA +"/${provinceId}/${cityId}"
-        queryAreaInfo(address)
+        val dbcilist : List<dbCounty> = DataSupport.where("cityCode=?", "${cityId}").find(dbCounty::class.java)
+        if (0 == dbcilist.size) {
+            val address: String = URL_OF_AREA +"/${provinceId}/${cityId}"
+            queryAreaInfofromServer(address)
+        } else {
+            queryAreaInfofromDatabaseAndRefreshDataOnUI(cityId)
+        }
     }
 
-    private fun queryAreaInfo(address : String){
+    private fun queryAreaInfofromDatabaseAndRefreshDataOnUI(inputId : Int){
+        queryAreaInfofromDatabase(inputId)
+        refreshAreaListDataOnUI()
+    }
+
+    private fun queryAreaInfofromDatabase(inputId : Int){
+        when (currentLevel) {
+            LEVEL_PROVINCE -> {
+                val dbplist : List<dbProvince> = DataSupport.where("provinceCode>?", "0")
+                        .order("provinceCode")//从数据库中查询出来，一定进行排序，确保体验
+                        .find(dbProvince::class.java)
+                areaList.clear()
+                for(i in dbplist) areaList.add(AreaItem(name = i.provinceName, id = i.provinceCode))
+            }
+
+            LEVEL_CITY -> {
+                val dbcilist : List<dbCity> = DataSupport.where("provinceCode=?", "${inputId}")
+                        .order("cityCode")//从数据库中查询出来，一定进行排序，确保体验
+                        .find(dbCity::class.java)
+                areaList.clear()
+                for(i in dbcilist) areaList.add(AreaItem(name = i.cityName, id = i.cityCode))
+            }
+
+            LEVEL_COUNTRY -> {
+                val dbcolist : List<dbCounty> = DataSupport.where("cityCode=?", "${inputId}")
+                        .order("countryCode")//从数据库中查询出来，一定进行排序，确保体验
+                        .find(dbCounty::class.java)
+                areaList.clear()
+                for(i in dbcolist) areaList.add(AreaItem(name = i.countyName, id = i.countryCode, weatherId = i.weatherCode))
+            }
+        }
+    }
+
+    private fun queryAreaInfofromServer(address : String){
         HttpUtil.sendOkHttpRequest(address, object: okhttp3.Callback {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
@@ -314,18 +383,20 @@ class AreaMainFragment : Fragment() {
 
                 LogUtil.i("HttpCallback", "queryAreaInfo-onResponse: ${responseDate}")
 
-                parseJsonWithGSONforAreaList(responseDate)
+                parseJsonWithGSONforDb(responseDate)
             }
         })
     }
 
-    private fun parseJsonWithGSONforAreaList(jsonData:String?) {
+    private fun parseJsonWithGSONforDb(jsonData:String?) {
+        //服务器返回来的消息只写数据库，不做其他的任何操作；如果需要数据，请从数据库中查询；这样形成一个统一的逻辑，操作数据入口唯一
 
         LogUtil.i("HttpCallback", "Start to praseJsonWithGSON for AreaInfo")
 
         if (null == jsonData) return
 
         val gson : Gson = Gson()
+        var inputId : Int = 0 //province level as default
 
         when (currentLevel) {
             LEVEL_PROVINCE -> {
@@ -334,7 +405,7 @@ class AreaMainFragment : Fragment() {
 
                 for (i : JsonProvince in numbers) {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
-                    areaList.add(AreaItem(i.name, id = i.id))
+                    //areaList.add(AreaItem(i.name, id = i.id))
 
                     //看看有无，有更新，无添加，数据库中多余的如何处理？删除
                     //这里无条件更新数据库的查找，在外边控制逻辑，从软件维护和后续升级的角度考虑，不适合在这里做控制
@@ -346,6 +417,7 @@ class AreaMainFragment : Fragment() {
                     } else {
                         dbp.updateAll("provinceCode=?", "${i.id}")
                     }
+                    //101缺少一个逻辑把数据库中的过时的数据删除；
                 }
             }
 
@@ -356,7 +428,7 @@ class AreaMainFragment : Fragment() {
                 for (i : JsonCity in numbers)
                 {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
-                    areaList.add(AreaItem(i.name, id = i.id))
+                    //areaList.add(AreaItem(i.name, id = i.id))
 
                     val dbcilist : List<dbCity> = DataSupport.where("cityCode=?", "${i.id}").find(dbCity::class.java)
                     val dbci = dbCity(cityCode = i.id, cityName = i.name, provinceCode = selectProvinceId)
@@ -365,7 +437,9 @@ class AreaMainFragment : Fragment() {
                     } else {
                         dbci.updateAll("cityCode=?", "${i.id}")
                     }
+                    //102缺少一个逻辑把数据库中的过时的数据删除；
                 }
+                inputId = selectProvinceId
             }
 
             LEVEL_COUNTRY -> {
@@ -375,51 +449,55 @@ class AreaMainFragment : Fragment() {
                 for (i : JsonCountry in numbers)
                 {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name} + ${i.weather_id}")
-                    areaList.add(AreaItem(i.name, id = i.id, weatherId = i.weather_id))
+                    //areaList.add(AreaItem(i.name, id = i.id, weatherId = i.weather_id))
 
-                    val dbcilist : List<dbCounty> = DataSupport.where("countryCode=?", "${i.id}").find(dbCounty::class.java)
+                    val dbcolist : List<dbCounty> = DataSupport.where("countryCode=?", "${i.id}").find(dbCounty::class.java)
                     val dbco = dbCounty(countryCode = i.id, countyName = i.name, cityCode = selectCityId, weatherCode = i.weather_id)
-                    if (0 == dbcilist.size) {
+                    if (0 == dbcolist.size) {
                         dbco.save()
                     } else {
                         dbco.updateAll("countryCode=?", "${i.id}")
                     }
+                    //103缺少一个逻辑把数据库中的过时的数据删除；
                 }
+                inputId = selectCityId
             }
         }
 
-        saveAreaListDataToDifferentListAndNotifiyUI(areaList, currentLevel)
+        queryAreaInfofromDatabaseAndRefreshDataOnUIfromSubThread(inputId)
     }
 
-    fun getAreaListData():MutableList<AreaItem>{
-        return areaList
-    }
+//    fun getAreaListData():MutableList<AreaItem>{
+//        return areaList
+//    }
 
-    fun refreshAreaListData(){
+    private fun refreshAreaListDataOnUI(){
         areaListView.adapter.notifyDataSetChanged()
     }
 
-    fun saveAreaListDataToDifferentListAndNotifiyUI(areaListInput : MutableList<AreaItem>, curlevel: Int){
-        when (curlevel) {
-            LEVEL_PROVINCE -> {
-                for(i in areaList)  areaListProvince.add(i)
-                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListProvince.count()}")
-            }
+    private fun queryAreaInfofromDatabaseAndRefreshDataOnUIfromSubThread(inputId : Int){
+//        when (curlevel) {
+//            LEVEL_PROVINCE -> {
+//                for(i in areaList)  areaListProvince.add(i)
+//                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListProvince.count()}")
+//            }
+//
+//            LEVEL_CITY -> {
+//                for(i in areaList)  areaListCity.add(i)
+//                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListCity.count()}")
+//            }
+//
+//            LEVEL_COUNTRY -> {
+//                for(i in areaList)  areaListCountry.add(i)
+//                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListCountry.count()}")
+//            }
+//        }
 
-            LEVEL_CITY -> {
-                for(i in areaList)  areaListCity.add(i)
-                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListCity.count()}")
-            }
-
-            LEVEL_COUNTRY -> {
-                for(i in areaList)  areaListCountry.add(i)
-                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListCountry.count()}")
-            }
-        }
+        queryAreaInfofromDatabase(inputId)
 
         getActivity()?.runOnUiThread(object :Runnable {
             override fun run() {
-                refreshAreaListData()
+                refreshAreaListDataOnUI()
             }
         })
     }

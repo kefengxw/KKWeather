@@ -42,7 +42,7 @@ class WeatherActivity : AppCompatActivity() {
     lateinit var jsonWeatherData : JsonWeather
 
     companion object {
-        fun actionStart(ctx: Context?, data_Country: String, data_WeatherId: String){
+        fun actionStartWA(ctx: Context?, data_Country: String, data_WeatherId: String){
             val intent : Intent = Intent(ctx, WeatherActivity::class.java)
             intent.putExtra("weatherId", data_WeatherId)
             intent.putExtra("country", data_Country)
@@ -138,7 +138,7 @@ class WeatherActivity : AppCompatActivity() {
 
         LogUtil.i("WeatherActivity", "Start to praseJsonWithGSON for weather!")
 
-        if (null == jsonData || (jsonData?.contains("error"))) {
+        if (null == jsonData || (jsonData.contains("error"))) {
 
             usingDefaultWeatherInfo = true
             tryToUpdateWeatherActivityUi()//那就还是刷新一下吧
@@ -286,8 +286,6 @@ class WeatherActivity : AppCompatActivity() {
                 weather_main_drawer_layout.openDrawer(GravityCompat.START)
                 //val v: View = LayoutInflater.from(ctx).inflate(R.layout.activity_main, weather_main, false) 不行
                 //drawer_layout.closeDrawers()
-                //setContentView(R.layout.activity_main) 不行
-                //MainActivity.actionStart(ctx, "qinghai", "CNXYX", "123456") 可以调出画面
             }
             else ->{//R.id.app_bar_refresh
                 Toast.makeText(ctx, "Hi other", Toast.LENGTH_SHORT).show()
@@ -307,5 +305,9 @@ class WeatherActivity : AppCompatActivity() {
                 LitePal.getDatabase()
             }
         })
+    }
+
+    private fun closeDrawers(){
+        weather_main_drawer_layout.closeDrawers()
     }
 }
