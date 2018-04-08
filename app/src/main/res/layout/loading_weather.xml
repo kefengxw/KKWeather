@@ -26,7 +26,7 @@
         android:id="@+id/progressBarText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="数据加载中..."
+        android:text="Loading the data..."
         android:textSize="36dp"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
@@ -36,7 +36,7 @@
         android:id="@+id/failInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="数据加载失败"
+        android:text="Failed to load the data..."
         android:textSize="36dp"
         android:layout_gravity="center"
         />
