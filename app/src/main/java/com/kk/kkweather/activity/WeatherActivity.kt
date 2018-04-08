@@ -18,7 +18,9 @@ import com.kk.kkweather.util.HttpUtil
 import com.kk.kkweather.util.LogUtil
 import kotlinx.android.synthetic.main.aqi_item.view.*
 import kotlinx.android.synthetic.main.forecast_item.view.*
+import kotlinx.android.synthetic.main.loading_weather.view.*
 import kotlinx.android.synthetic.main.weather_main.*
+import kotlinx.android.synthetic.main.weather_main.view.*
 import kotlinx.android.synthetic.main.wmdrawerlayout.*
 import okhttp3.Call
 import okhttp3.Response
@@ -232,9 +234,9 @@ class WeatherActivity : AppCompatActivity() {
         toolBar.bringToFront()
         if (true == usingDefaultWeatherInfo) {
             //显示数据加载失败
-            failInfo.visibility = View.VISIBLE
-            progressBar.visibility = View.INVISIBLE
-            progressBarText.visibility = View.INVISIBLE
+            loading_component.failInfo.visibility = View.VISIBLE
+            loading_component.progressBar.visibility = View.INVISIBLE
+            loading_component.progressBarText.visibility = View.INVISIBLE
 
             return
         }
@@ -244,8 +246,8 @@ class WeatherActivity : AppCompatActivity() {
             weather_weather_now.visibility = View.INVISIBLE
             weather_degree_now.visibility = View.INVISIBLE
             weather_update_time.visibility = View.INVISIBLE
-            progressBar.visibility = View.VISIBLE
-            progressBarText.visibility = View.VISIBLE
+            loading_component.progressBar.visibility = View.VISIBLE
+            loading_component.progressBarText.visibility = View.VISIBLE
         }
         else
         {
@@ -253,11 +255,11 @@ class WeatherActivity : AppCompatActivity() {
             weather_weather_now.visibility = View.VISIBLE
             weather_degree_now.visibility = View.VISIBLE
             weather_update_time.visibility = View.VISIBLE
-            progressBar.visibility = View.INVISIBLE
-            progressBarText.visibility = View.INVISIBLE
+            loading_component.progressBar.visibility = View.INVISIBLE
+            loading_component.progressBarText.visibility = View.INVISIBLE
         }
 
-        failInfo.visibility = View.INVISIBLE
+        loading_component.failInfo.visibility = View.INVISIBLE
 
         return
     }
