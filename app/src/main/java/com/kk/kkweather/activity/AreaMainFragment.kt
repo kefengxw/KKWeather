@@ -266,7 +266,6 @@ class AreaMainFragment : Fragment() {
         editor.apply()
 
         WeatherActivity.actionStartWA(ctx, country, weatherId)
-        getActivity()?.finish()
 
         if (AreaMainFragment.ACTIVITY_TYPE_AREA_MAIN_ACTIVITY == AreaMainFragment.activityType)
         {   //from main area activity
@@ -275,8 +274,11 @@ class AreaMainFragment : Fragment() {
         }
         else
         {   //from layout drawer weather activity
-            //ctx.closeDrawers()
+            val acti : WeatherActivity = getActivity() as WeatherActivity
+            acti.closeDrawers()
         }
+
+        getActivity()?.finish()
     }
 
     private fun backToCityActivity()

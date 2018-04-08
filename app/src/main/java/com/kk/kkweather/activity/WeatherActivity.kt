@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -37,6 +38,7 @@ class WeatherActivity : AppCompatActivity() {
     val ctx = this
     val weatherAddrHead = "http://guolin.tech/api/weather/?cityid="
     val authKey = "9ff41582de514a658ac5f523363a6d08"
+    var weatherAddr : String = ""
     var picbgAddr : String = ""
     var picbgReady : Boolean = false
     var weatherInfoReady : Boolean = false
@@ -69,7 +71,7 @@ class WeatherActivity : AppCompatActivity() {
 
         val currentCountry : String = intent.getStringExtra("country")
         val currentWeatherId : String = intent.getStringExtra("weatherId")
-        val weatherAddr = weatherAddrHead + "${currentWeatherId}&key=" + authKey
+        weatherAddr = weatherAddrHead + "${currentWeatherId}&key=" + authKey
 
         val backgroundPicAddr : String = "http://guolin.tech/api/bing_pic"
 
@@ -86,6 +88,18 @@ class WeatherActivity : AppCompatActivity() {
 
         setCityHomeButtionListener(ctx)
         //switch_debug.setOnCheckedChangeListener(this)
+        setSwipeRefreshListener()
+    }
+
+    private fun setSwipeRefreshListener(){
+        swipe_refresh.setOnRefreshListener(object: SwipeRefreshLayout.OnRefreshListener{
+            override fun onRefresh() {
+                //Toast.makeText(ctx, "Hi SwipeRefreshLayout", Toast.LENGTH_SHORT).show()
+                usingDefaultWeatherInfo = false
+                setWeatherElementVisibleByLoading(true, usingDefaultWeatherInfo)
+                queryWeatherInfo(weatherAddr)
+            }
+        })
     }
 
     private fun queryBackgroundPic(address : String){
@@ -184,6 +198,8 @@ class WeatherActivity : AppCompatActivity() {
         {
             LogUtil.i("WeatherActivity", "天气或背景更新失败!w ${weatherInfoReady},b ${picbgReady}")
         }
+
+        swipe_refresh.setRefreshing(false)
     }
 
     private fun UpdateAllWeatherInfo(jsonWeatherData : JsonWeather) {
@@ -311,7 +327,7 @@ class WeatherActivity : AppCompatActivity() {
         })
     }
 
-    private fun closeDrawers(){
+    fun closeDrawers(){
         weather_main_drawer_layout.closeDrawers()
     }
 }
