@@ -18,7 +18,9 @@ import com.kk.kkweather.util.HttpUtil
 import com.kk.kkweather.util.LogUtil
 import kotlinx.android.synthetic.main.aqi_item.view.*
 import kotlinx.android.synthetic.main.forecast_item.view.*
+import kotlinx.android.synthetic.main.life_suggestion.view.*
 import kotlinx.android.synthetic.main.loading_weather.view.*
+import kotlinx.android.synthetic.main.title_weather.view.*
 import kotlinx.android.synthetic.main.weather_main.*
 import kotlinx.android.synthetic.main.weather_main.view.*
 import kotlinx.android.synthetic.main.wmdrawerlayout.*
@@ -73,7 +75,7 @@ class WeatherActivity : AppCompatActivity() {
 
         LogUtil.i("WeatherActivity", ("onCreate: " + weatherAddr))
 
-        weather_cityname.text = currentCountry
+        title_weather_w.weather_cityname.text = currentCountry
 
         setWeatherElementVisibleByLoading(true, usingDefaultWeatherInfo)
 
@@ -189,14 +191,14 @@ class WeatherActivity : AppCompatActivity() {
 
         for (i : HeWeatherItem in jsonWeatherData.heWeather!!)
         {
-            if (weather_cityname.text != i.basic.location) {
+            if (title_weather_w.weather_cityname.text != i.basic.location) {
                 LogUtil.i("WeatherActivity", "Wrong city name!")
-                weather_cityname.text != i.basic.location
+                title_weather_w.weather_cityname.text != i.basic.location
             }
 
-            weather_update_time.text = i.basic.update.loc
-            weather_degree_now.text = i.now.tmp + "℃"
-            weather_weather_now.text = i.now.condTxt
+            title_weather_w.weather_update_time.text = i.basic.update.loc
+            title_weather_w.weather_degree_now.text = i.now.tmp + "℃"
+            title_weather_w.weather_weather_now.text = i.now.condTxt
             forecast.text = "未来3天天气预报"
 
             forecast_day1.forecast_date.text = i.dailyForecast?.get(0)?.date
@@ -217,9 +219,9 @@ class WeatherActivity : AppCompatActivity() {
             aqi_index_value.aqi_index_pm25.text = i.aqi.city.pm
             aqi_index_value.aqi_index_air.text = i.aqi.city.pm
 
-            life_suggestions_content_comf.text = "舒适度: " + i.suggestion.comf.txt
-            life_suggestions_content_sport.text = "运动指数: " + i.suggestion.sport.txt
-            life_suggestions_content_car.text = "洗车建议: " + i.suggestion.cw.txt
+            life_suggestion_w.life_suggestions_content_comf.text = "舒适度: " + i.suggestion.comf.txt
+            life_suggestion_w.life_suggestions_content_sport.text = "运动指数: " + i.suggestion.sport.txt
+            life_suggestion_w.life_suggestions_content_car.text = "洗车建议: " + i.suggestion.cw.txt
         }
 
         return
@@ -243,18 +245,18 @@ class WeatherActivity : AppCompatActivity() {
 
         if (loadingFlag == true){
             scrollView.visibility = View.INVISIBLE
-            weather_weather_now.visibility = View.INVISIBLE
-            weather_degree_now.visibility = View.INVISIBLE
-            weather_update_time.visibility = View.INVISIBLE
+            title_weather_w.weather_weather_now.visibility = View.INVISIBLE
+            title_weather_w.weather_degree_now.visibility = View.INVISIBLE
+            title_weather_w.weather_update_time.visibility = View.INVISIBLE
             loading_component.progressBar.visibility = View.VISIBLE
             loading_component.progressBarText.visibility = View.VISIBLE
         }
         else
         {
             scrollView.visibility = View.VISIBLE
-            weather_weather_now.visibility = View.VISIBLE
-            weather_degree_now.visibility = View.VISIBLE
-            weather_update_time.visibility = View.VISIBLE
+            title_weather_w.weather_weather_now.visibility = View.VISIBLE
+            title_weather_w.weather_degree_now.visibility = View.VISIBLE
+            title_weather_w.weather_update_time.visibility = View.VISIBLE
             loading_component.progressBar.visibility = View.INVISIBLE
             loading_component.progressBarText.visibility = View.INVISIBLE
         }
@@ -302,7 +304,7 @@ class WeatherActivity : AppCompatActivity() {
 //    }
 
     private fun setCityHomeButtionListener(ctx: Context?) {
-        weather_cityhome.setOnClickListener(object : View.OnClickListener {
+        title_weather_w.weather_cityhome.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 LitePal.getDatabase()
             }

@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="165dp" />
+        app:layout_constraintGuide_begin="190dp" />
 
     <include
         android:id="@+id/loading_component"
@@ -62,83 +62,15 @@
         layout="@layout/loading_weather"
         />
 
-    <ImageButton
-        android:id="@+id/weather_cityhome"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/holo_blue_light"
-        app:layout_constraintTop_toTopOf="@+id/toolBar"
+    <include
+        android:id="@+id/title_weather_w"
+        layout="@layout/title_weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/guidelineh"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_home"
-        />
-
-    <TextView
-        android:id="@+id/weather_cityname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="上海"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="36sp"
         app:layout_constraintTop_toTopOf="@+id/toolBar"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineh"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.507"
-        />
-
-    <TextView
-        android:id="@+id/weather_update_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
-        android:text="2018.03.25 20.21"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="@+id/toolBar"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineh"
-        app:layout_constraintStart_toEndOf="@+id/weather_cityname"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintVertical_bias="0.8"
-        />
-
-    <TextView
-        android:id="@+id/weather_degree_now"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="26 C"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorPrimary"
-        android:textSize="39sp"
-        app:layout_constraintTop_toTopOf="@+id/guidelineh"
-        app:layout_constraintLeft_toRightOf="@+id/weather_cityhome"
-        />
-
-    <TextView
-        android:id="@+id/weather_weather_now"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="48dp"
-        android:text="晴"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorPrimary"
-        android:textSize="39sp"
-        app:layout_constraintTop_toTopOf="@+id/guidelineh"
-        app:layout_constraintStart_toEndOf="@+id/weather_degree_now"
-        />
+        app:layout_constraintVertical_bias="1.0" />
 
     <!--<android.support.v4.widget.SwipeRefreshLayout-->
         <!--android:id="@+id/swipe_refresh"-->
@@ -152,7 +84,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="48dp"
             android:background="@color/colorPrimary"
             app:layout_constraintTop_toTopOf="@+id/guidelineh"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -239,48 +171,11 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:background="@android:color/background_light" />
 
-                <TextView
-                    android:id="@+id/life_suggestions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="生活建议"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <TextView
-                    android:id="@+id/life_suggestions_content_comf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="舒适度"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <TextView
-                    android:id="@+id/life_suggestions_content_sport"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="室内运动"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <TextView
-                    android:id="@+id/life_suggestions_content_car"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="适合洗车"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                <include
+                    android:id="@+id/life_suggestion_w"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    layout="@layout/life_suggestion"
                     />
 
             </LinearLayout>
