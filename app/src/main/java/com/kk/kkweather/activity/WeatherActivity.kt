@@ -2,7 +2,9 @@ package com.kk.kkweather.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
@@ -48,8 +50,10 @@ class WeatherActivity : AppCompatActivity() {
     var usingDefaultWeatherInfo : Boolean = false
 
     lateinit var jsonWeatherData : JsonWeather
+    lateinit var currentCountry :String
+    lateinit var currentWeatherId : String
 
-    companion object {
+            companion object {
         fun actionStartWA(ctx: Context?, data_Country: String, data_WeatherId: String){
             val intent : Intent = Intent(ctx, WeatherActivity::class.java)
             intent.putExtra("weatherId", data_WeatherId)
@@ -71,8 +75,8 @@ class WeatherActivity : AppCompatActivity() {
 
         LogUtil.i("WeatherActivity", "onCreate: ${ctx}")
 
-        val currentCountry : String = intent.getStringExtra("country")
-        val currentWeatherId : String = intent.getStringExtra("weatherId")
+        currentCountry = intent.getStringExtra("country")
+        currentWeatherId = intent.getStringExtra("weatherId")
         weatherAddr = weatherAddrHead + "${currentWeatherId}&key=" + authKey
 
         val backgroundPicAddr : String = "http://guolin.tech/api/bing_pic"
@@ -98,7 +102,9 @@ class WeatherActivity : AppCompatActivity() {
                 //Toast.makeText(ctx, "Hi SwipeRefreshLayout", Toast.LENGTH_SHORT).show()
                 usingDefaultWeatherInfo = false
                 setWeatherElementVisibleByLoading(true, usingDefaultWeatherInfo)
-                queryWeatherInfo(weatherAddr)
+
+                weatherInfoReady = false
+                queryWeatherInfo(weatherAddr, false)
             }
         })
     }
@@ -127,7 +133,21 @@ class WeatherActivity : AppCompatActivity() {
         })
     }
 
-    private fun queryWeatherInfo(address : String){
+    private fun queryWeatherInfo(address : String, localDataflag : Boolean = true){
+
+        if (true == localDataflag) {
+            val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
+            val jsonData = prefs.getString("weatherInfo", null)
+            val wiid : String? = prefs.getString("weatherInfoId", null)
+            val wid : String?  = prefs.getString("weatherId", null)
+            if (null != wiid && null != wid && wiid.equals(wid) && (jsonData != null))
+            {//it does not seems make sense, still no so quick
+                weatherInfoReady = true
+                parseJsonWithGSONforWeather(jsonData)
+                return
+            }
+        }
+
         HttpUtil.sendOkHttpRequest(address, object: okhttp3.Callback {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
@@ -163,10 +183,10 @@ class WeatherActivity : AppCompatActivity() {
 
         jsonWeatherData = gson.fromJson(jsonData, JsonWeather::class.java)
 
-        tryToUpdateWeatherActivityUi()
+        tryToUpdateWeatherActivityUi(jsonData)
     }
 
-    private fun tryToUpdateWeatherActivityUi() {
+    private fun tryToUpdateWeatherActivityUi(jsonData:String? = null) {
 
         if (true == weatherInfoReady && true == picbgReady)
         {
@@ -186,7 +206,11 @@ class WeatherActivity : AppCompatActivity() {
                     setWeatherElementVisibleByLoading(false, usingDefaultWeatherInfo)
 
                     // if refresh success, than save local data
-
+                    var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
+                    var editor : SharedPreferences.Editor = prefs.edit()
+                    editor.putString("weatherInfoId", currentWeatherId)
+                    editor.putString("weatherInfo", jsonData)
+                    editor.apply()
                 }
             })
         }
