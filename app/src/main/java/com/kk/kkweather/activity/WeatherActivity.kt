@@ -253,8 +253,9 @@ class WeatherActivity : AppCompatActivity() {
         if (true == usingDefaultWeatherInfo) {
             //显示数据加载失败
             loading_component.failInfo.visibility = View.VISIBLE
-            loading_component.progressBar.visibility = View.INVISIBLE
             loading_component.progressBarText.visibility = View.INVISIBLE
+            if (false == swipe_refresh.isRefreshing())
+                loading_component.progressBar.visibility = View.INVISIBLE
 
             return
         }
@@ -264,8 +265,9 @@ class WeatherActivity : AppCompatActivity() {
             title_weather_w.weather_weather_now.visibility = View.INVISIBLE
             title_weather_w.weather_degree_now.visibility = View.INVISIBLE
             title_weather_w.weather_update_time.visibility = View.INVISIBLE
-            loading_component.progressBar.visibility = View.VISIBLE
             loading_component.progressBarText.visibility = View.VISIBLE
+            if (false == swipe_refresh.isRefreshing())
+                loading_component.progressBar.visibility = View.VISIBLE
         }
         else
         {
@@ -273,8 +275,9 @@ class WeatherActivity : AppCompatActivity() {
             title_weather_w.weather_weather_now.visibility = View.VISIBLE
             title_weather_w.weather_degree_now.visibility = View.VISIBLE
             title_weather_w.weather_update_time.visibility = View.VISIBLE
-            loading_component.progressBar.visibility = View.INVISIBLE
             loading_component.progressBarText.visibility = View.INVISIBLE
+            if (false == swipe_refresh.isRefreshing())
+                loading_component.progressBar.visibility = View.INVISIBLE
         }
 
         loading_component.failInfo.visibility = View.INVISIBLE
