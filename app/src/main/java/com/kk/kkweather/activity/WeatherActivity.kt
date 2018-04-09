@@ -38,12 +38,14 @@ class WeatherActivity : AppCompatActivity() {
     val ctx = this
     val weatherAddrHead = "http://guolin.tech/api/weather/?cityid="
     val authKey = "9ff41582de514a658ac5f523363a6d08"
-    var weatherAddr : String = ""
-    var picbgAddr : String = ""
-    var picbgReady : Boolean = false
-    var weatherInfoReady : Boolean = false
-    var usingDefaultWeatherInfo : Boolean = false
+
+    var picbgReady : Boolean = false //means got the OkHttpRequest result, no matter failure or success
+    var picbgAddr : String = ""      //means got the successful result
     var usingDefaultPicBgInfo : Boolean = false
+
+    var weatherInfoReady : Boolean = false
+    var weatherAddr : String = ""
+    var usingDefaultWeatherInfo : Boolean = false
 
     lateinit var jsonWeatherData : JsonWeather
 
@@ -81,7 +83,6 @@ class WeatherActivity : AppCompatActivity() {
 
         setWeatherElementVisibleByLoading(true, usingDefaultWeatherInfo)
 
-
         //*********************注意这里必须考虑先后顺序的问题*********************
         queryWeatherInfo(weatherAddr)
         queryBackgroundPic(backgroundPicAddr)
@@ -107,11 +108,9 @@ class WeatherActivity : AppCompatActivity() {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("WeatherActivity", "BackgroundPic-onFailure")
-
                 usingDefaultPicBgInfo = true
                 picbgReady = true
-
-                //需要处理一下
+                //201需要处理一下
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -133,10 +132,8 @@ class WeatherActivity : AppCompatActivity() {
             override fun onFailure(call: Call?, e: IOException?) {
                 //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("WeatherActivity", "WeatherInfo-onFailure")
-
                 weatherInfoReady = true
                 usingDefaultWeatherInfo = true
-
                 tryToUpdateWeatherActivityUi()
             }
 
@@ -157,7 +154,6 @@ class WeatherActivity : AppCompatActivity() {
         LogUtil.i("WeatherActivity", "Start to praseJsonWithGSON for weather!")
 
         if (null == jsonData || (jsonData.contains("error"))) {
-
             usingDefaultWeatherInfo = true
             tryToUpdateWeatherActivityUi()//那就还是刷新一下吧
             return
@@ -185,12 +181,12 @@ class WeatherActivity : AppCompatActivity() {
                         //使用本地的pic,后续补充101
                         //Glide.with(ctx).load(picbgAddr).into(backgroundPic)
                     }
-
-                    if (false == usingDefaultWeatherInfo) {
-                        UpdateAllWeatherInfo(jsonWeatherData)
-                    }
+                    if (false == usingDefaultWeatherInfo)   UpdateAllWeatherInfo(jsonWeatherData)
 
                     setWeatherElementVisibleByLoading(false, usingDefaultWeatherInfo)
+
+                    // if refresh success, than save local data
+
                 }
             })
         }

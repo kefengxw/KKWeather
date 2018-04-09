@@ -79,47 +79,16 @@ class AreaMainFragment : Fragment() {
 //    private fun LocalDateInitProvince(){
 ////        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
 //        areaListProvince.add(AreaItem("01Sweden"))
-//        areaListProvince.add(AreaItem("02加拿大"))
-//        areaListProvince.add(AreaItem("03佛得角"))
-//        areaListProvince.add(AreaItem("04开曼群岛"))
-//        areaListProvince.add(AreaItem("05中非共和国"))
-//        areaListProvince.add(AreaItem("06乍得"))
-//        areaListProvince.add(AreaItem("07智利"))
-//        areaListProvince.add(AreaItem("08中国"))
-//        areaListProvince.add(AreaItem("09斐济"))
-//        areaListProvince.add(AreaItem("10芬兰"))
-//        areaListProvince.add(AreaItem("11法国"))
-//        areaListProvince.add(AreaItem("12法属圭亚那"))
-//        areaListProvince.add(AreaItem("13法属波利尼西亚"))
-//        areaListProvince.add(AreaItem("14加蓬"))
-//        areaListProvince.add(AreaItem("15冈比亚"))
-//        areaListProvince.add(AreaItem("16格鲁吉亚"))
-//        areaListProvince.add(AreaItem("17德国"))
 //    }
-//
+
 //    private fun LocalDateInitCity() {
 ////        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
-//        areaListCity.add(AreaItem("01南通"))
-//        areaListCity.add(AreaItem("02苏州"))
-//        areaListCity.add(AreaItem("03无锡"))
-//        areaListCity.add(AreaItem("04徐州"))
-//        areaListCity.add(AreaItem("05常州"))
-//        areaListCity.add(AreaItem("06镇江"))
-//        areaListCity.add(AreaItem("07扬州"))
-//        areaListCity.add(AreaItem("08连云港"))
-//        areaListCity.add(AreaItem("09宿迁"))
-//        areaListCity.add(AreaItem("10南京"))
-//        areaListCity.add(AreaItem("11盐城"))
-//        areaListCity.add(AreaItem("12Stockholm"))
+//        areaListCity.add(AreaItem("01Stockholm"))
 //    }
-//
+
 //    private fun LocalDateInitCounty() {
 ////        有几个问题待解决,1.只有少量数据的时候,底部有白色的边，2.最后一个数据为什么不显示?
-//        areaListCountry.add(AreaItem("01海安"))
-//        areaListCountry.add(AreaItem("02东台"))
-//        areaListCountry.add(AreaItem("03如东"))
-//        areaListCountry.add(AreaItem("04启东"))
-//        areaListCountry.add(AreaItem("05闸港"))
+//        areaListCountry.add(AreaItem("01Helelund"))
 //    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -204,14 +173,6 @@ class AreaMainFragment : Fragment() {
 
     private fun switchToProvinceActivity()
     {
-        //areaListProvince.clear()//第一次清空省份信息，只是做测试使用
-//        areaList.clear()
-//        if (areaListProvince.isEmpty()){
-//            queryProvinceInfo()
-//        }else{
-//            for(i in areaListProvince)  areaList.add(i)
-//            areaListView.adapter.notifyDataSetChanged()
-//        }
         currentLevel = LEVEL_PROVINCE
 
         queryProvinceInfo()
@@ -223,13 +184,6 @@ class AreaMainFragment : Fragment() {
 
     private fun switchToCityActivity(province: String, provinceId: Int)
     {
-//        areaList.clear()
-//        if (areaListCity.isEmpty()){
-//            queryCityInfo(province, provinceId)
-//        }else{
-//            for(i in areaListCity)  areaList.add(i)
-//            areaListView.adapter.notifyDataSetChanged()
-//        }
         currentLevel = LEVEL_CITY
 
         queryCityInfo(provinceId)
@@ -240,14 +194,6 @@ class AreaMainFragment : Fragment() {
 
     private fun switchToCountyActivity(city: String, provinceId: Int, cityId: Int)
     {
-//        areaList.clear()
-//        if (areaListCountry.isEmpty()){
-//            queryCountyInfo(provinceId, cityId)
-//        }else{
-//            for(i in areaListCountry)  areaList.add(i)
-//            areaListView.adapter.notifyDataSetChanged()
-//        }
-
         currentLevel = LEVEL_COUNTRY
 
         queryCountyInfo(provinceId, cityId)
@@ -283,11 +229,6 @@ class AreaMainFragment : Fragment() {
 
     private fun backToCityActivity()
     {
-//        areaList.clear()
-//        areaListCountry.clear()
-//        for(i in areaListCity)  areaList.add(i)
-//        areaListView.adapter.notifyDataSetChanged()
-
         currentLevel = LEVEL_CITY
         currentView.area_main_title_backbutton.visibility = View.VISIBLE
         currentView.area_main_title_text.text = selectProvince
@@ -297,11 +238,6 @@ class AreaMainFragment : Fragment() {
 
     private fun backToProvinceActivity()
     {
-//        areaList.clear()
-//        areaListCity.clear()
-//        for(i in areaListProvince)  areaList.add(i)
-//        areaListView.adapter.notifyDataSetChanged()
-
         currentLevel = LEVEL_PROVINCE
         currentView.area_main_title_backbutton.visibility = View.INVISIBLE
         currentView.area_main_title_text.text = "中国"
@@ -479,22 +415,6 @@ class AreaMainFragment : Fragment() {
     }
 
     private fun queryAreaInfofromDatabaseAndRefreshDataOnUIfromSubThread(inputId : Int){
-//        when (curlevel) {
-//            LEVEL_PROVINCE -> {
-//                for(i in areaList)  areaListProvince.add(i)
-//                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListProvince.count()}")
-//            }
-//
-//            LEVEL_CITY -> {
-//                for(i in areaList)  areaListCity.add(i)
-//                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListCity.count()}")
-//            }
-//
-//            LEVEL_COUNTRY -> {
-//                for(i in areaList)  areaListCountry.add(i)
-//                LogUtil.i("HttpCallback", "RunOnUiThread for ${curlevel}, ${areaList.count()}, ${areaListCountry.count()}")
-//            }
-//        }
 
         queryAreaInfofromDatabase(inputId)
 
