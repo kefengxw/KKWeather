@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import com.kk.kkweather.R
 import com.kk.kkweather.gson.HeWeatherItem
 import com.kk.kkweather.gson.JsonWeather
+import com.kk.kkweather.service.AutoUpdateWeatherService.Companion.startBackgoundUpdateWeatherInfo
 import com.kk.kkweather.util.HttpUtil
 import com.kk.kkweather.util.LogUtil
 import kotlinx.android.synthetic.main.aqi_item.view.*
@@ -25,7 +26,6 @@ import kotlinx.android.synthetic.main.life_suggestion.view.*
 import kotlinx.android.synthetic.main.loading_weather.view.*
 import kotlinx.android.synthetic.main.title_weather.view.*
 import kotlinx.android.synthetic.main.weather_main.*
-import kotlinx.android.synthetic.main.weather_main.view.*
 import kotlinx.android.synthetic.main.wmdrawerlayout.*
 import okhttp3.Call
 import okhttp3.Response
@@ -53,7 +53,7 @@ class WeatherActivity : AppCompatActivity() {
     lateinit var currentCountry :String
     lateinit var currentWeatherId : String
 
-            companion object {
+    companion object {
         fun actionStartWA(ctx: Context?, data_Country: String, data_WeatherId: String){
             val intent : Intent = Intent(ctx, WeatherActivity::class.java)
             intent.putExtra("weatherId", data_WeatherId)
@@ -94,6 +94,14 @@ class WeatherActivity : AppCompatActivity() {
         setCityHomeButtionListener(ctx)
         //switch_debug.setOnCheckedChangeListener(this)
         setSwipeRefreshListener()
+
+        startAutoUpdateWeatherService()
+    }
+
+    private fun startAutoUpdateWeatherService(){
+        LogUtil.i("WeatherActivity", "startAutoUpdateWeatherService")
+
+        startBackgoundUpdateWeatherInfo(ctx, currentCountry, currentWeatherId, weatherAddr)
     }
 
     private fun setSwipeRefreshListener(){
@@ -141,7 +149,7 @@ class WeatherActivity : AppCompatActivity() {
             val wiid : String? = prefs.getString("weatherInfoId", null)
             val wid : String?  = prefs.getString("weatherId", null)
             if (null != wiid && null != wid && wiid.equals(wid) && (jsonData != null))
-            {//it does not seems make sense, still no so quick
+            {//it does not seems make sense, still not so quick
                 weatherInfoReady = true
                 parseJsonWithGSONforWeather(jsonData)
                 return
