@@ -10,17 +10,16 @@
     android:orientation="vertical"
     tools:context="com.kk.kkweather.activity.MainActivity">
 
-    <Button
+    <ImageButton
         android:id="@+id/area_main_title_backbutton"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="18dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/ic_back"
-        android:backgroundTint="@android:color/holo_red_light"
+        android:background="@drawable/ic_arrow_back_white_48dp"
         app:layout_constraintBottom_toTopOf="@+id/area_main_guide_lineh"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,11 +34,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
-        android:text="江苏Jiangsu"
+        android:text="Jiangsu"
         android:textAlignment="center"
         android:textColor="@android:color/holo_orange_light"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@+id/area_main_guide_lineh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/area_main_title_backbutton"

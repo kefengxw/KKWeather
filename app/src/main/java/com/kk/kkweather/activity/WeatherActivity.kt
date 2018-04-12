@@ -71,7 +71,7 @@ class WeatherActivity : AppCompatActivity() {
         setSupportActionBar(toolBar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home_white_48dp)
 
         LogUtil.i("WeatherActivity", "onCreate: ${ctx}")
 
@@ -351,11 +351,11 @@ class WeatherActivity : AppCompatActivity() {
 //    }
 
     private fun setCityHomeButtionListener(ctx: Context?) {
-        title_weather_w.weather_cityhome.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                LitePal.getDatabase()
-            }
-        })
+//        title_weather_w.weather_cityhome.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(v: View?) {
+//                LitePal.getDatabase()
+//            }
+//        })
     }
 
     fun closeDrawers(){

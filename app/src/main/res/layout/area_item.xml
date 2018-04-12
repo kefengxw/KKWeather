@@ -9,26 +9,28 @@
 
     <ImageView
         android:id="@+id/area_item_image"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_weight="1.5"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.2"
+        android:layout_marginLeft="8dp"
         android:background="@color/colorPrimary"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_home"
-        android:contentDescription="TODO"/>
+        />
 
     <TextView
         android:id="@+id/area_item_name"
         android:layout_width="0dp"
         android:layout_height="55dp"
+        android:layout_marginLeft="16dp"
         android:layout_weight="8.5"
         android:fontFamily="serif"
+        android:gravity="start|center"
+        android:lines="1"
+        android:text="Hello Item"
+        android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@android:color/holo_purple"
-        android:gravity = "start|center"
-        android:textSize="36sp"
-        android:lines="1"
-        android:text="hello item 1"
-        />
+        android:textSize="26sp" />
 
 </LinearLayout>
