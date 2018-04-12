@@ -13,7 +13,7 @@ import java.security.AccessController.getContext
 /**
  * Created by xxnfd on 25/03/2018.
  */
-class AreaRecyListAdapter(areaAllList:MutableList<AreaItem>, inctx: Context?) : RecyclerView.Adapter<AreaRecyListAdapter.AreaViewHolder>(), View.OnClickListener{
+class AreaRecyListAdapter(areaAllList: MutableList<AreaItem>, inctx: Context?) : RecyclerView.Adapter<AreaRecyListAdapter.AreaViewHolder>(), View.OnClickListener {
 
     var ctx = inctx //初始化的时候有可能是null
     var areaList = areaAllList
@@ -57,7 +57,7 @@ class AreaRecyListAdapter(areaAllList:MutableList<AreaItem>, inctx: Context?) : 
         holder.itemName.text = areaItem.name
         holder.itemView.tag = position  //把位置信息进行保存
 
-        LogUtil.i("BindViewHolder", "itemNmae:${areaItem.name}" + "      position: ${position}"+"      ${areaItem.name}")
+        LogUtil.i("BindViewHolder", "itemNmae:${areaItem.name}" + "      position: ${position}" + "      ${areaItem.name}")
     }
 
     override fun getItemCount(): Int = areaList.size
