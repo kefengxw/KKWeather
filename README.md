@@ -1,3 +1,3 @@
 # KKWeather
 
-Will add later
+This a weather Android project which is based on Kotlin.
