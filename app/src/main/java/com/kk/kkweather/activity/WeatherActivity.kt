@@ -146,7 +146,6 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun queryWeatherInfo(address: String, localDataflag: Boolean = true) {
-
         if (true == localDataflag) {
             val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
             val jsonData = prefs.getString("weatherInfo", null)
@@ -181,7 +180,6 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun parseJsonWithGSONforWeather(jsonData: String?) {
-
         LogUtil.i("WeatherActivity", "Start to praseJsonWithGSON for weather!")
 
         if (null == jsonData || (jsonData.contains("error"))) {
@@ -191,14 +189,12 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         val gson: Gson = Gson()
-
         jsonWeatherData = gson.fromJson(jsonData, JsonWeather::class.java)
 
         tryToUpdateWeatherActivityUi(jsonData)
     }
 
     private fun tryToUpdateWeatherActivityUi(jsonData: String? = null) {
-
         if (true == weatherInfoReady && true == picbgReady) {
             runOnUiThread(object : Runnable {
                 override fun run() {
@@ -269,10 +265,9 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     fun setWeatherElementVisibleByLoading(loadingFlag: Boolean, usingDefaultWeatherInfo: Boolean) {
-//getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-//toolBar.visibility = View.VISIBLE
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        //getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        //toolBar.visibility = View.VISIBLE
 
         toolBar.bringToFront()
         if (true == usingDefaultWeatherInfo) {
