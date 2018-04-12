@@ -10,18 +10,20 @@
         android:id="@+id/aqi_index_pm25"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="PM2.5"
-        android:textSize="18sp"
-        />
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/aqi_index_air"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="空气指数"
-        android:textSize="18sp"
-        />
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
 </LinearLayout>

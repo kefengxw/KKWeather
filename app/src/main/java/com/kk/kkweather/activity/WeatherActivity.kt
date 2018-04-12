@@ -66,8 +66,8 @@ class WeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wmdrawerlayout)
 
-        toolBar.setTitle("My Title");
-        toolBar.setSubtitle("Sub title")
+        toolBar.setTitle("KKWeather");
+        //toolBar.setSubtitle("Sub title")
         setSupportActionBar(toolBar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -243,7 +243,7 @@ class WeatherActivity : AppCompatActivity() {
             title_weather_w.weather_update_time.text = i.basic.update.loc
             title_weather_w.weather_degree_now.text = i.now.tmp + "℃"
             title_weather_w.weather_weather_now.text = i.now.condTxt
-            forecast.text = "未来3天天气预报"
+            //forecast.text = "Forecast in Next 3 Days"
 
             forecast_day1.forecast_date.text = i.dailyForecast?.get(0)?.date
             forecast_day1.forecast_weather.text = i.dailyForecast?.get(0)?.cond?.txtD

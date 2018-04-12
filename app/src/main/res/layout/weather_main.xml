@@ -101,7 +101,9 @@
                     android:id="@+id/forecast"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="预报"
+                    android:layout_marginLeft="8dp"
+                    android:text="Forecast in Next 3 Days"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -130,8 +132,9 @@
                 <ImageView
                     android:id="@+id/image_bgup"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@android:color/background_light"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/white"
                     android:textSize="8sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -141,12 +144,13 @@
                     android:id="@+id/aqi_index"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:text="AQI Index"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <include
                     android:id="@+id/aqi_index_desc"
@@ -165,11 +169,12 @@
                 <ImageView
                     android:id="@+id/image_bgdown"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@android:color/background_light"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:background="@android:color/background_light" />
+                    />
 
                 <include
                     android:id="@+id/life_suggestion_w"

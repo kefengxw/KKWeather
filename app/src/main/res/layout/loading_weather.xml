@@ -12,15 +12,11 @@
         style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginEnd="72dp"
         android:layout_marginStart="72dp"
         android:layout_marginTop="50dp"
-        android:background="@android:color/holo_orange_light"
-        android:indeterminate="true"
-        android:progressBackgroundTint="@android:color/holo_green_light"
-        android:progressTint="@android:color/holo_purple"
-        android:layout_gravity="center"
-        />
+        android:indeterminate="false" />
 
     <TextView
         android:id="@+id/progressBarText"
@@ -29,7 +25,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:text="Loading the data..."
-        android:textColor="?attr/colorBackgroundFloating"
+        android:textColor="@color/colorPrimary"
         android:textSize="32dp" />
 
     <TextView
@@ -38,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Failed to load the data..."
-        android:textColor="?attr/colorBackgroundFloating"
+        android:textColor="@color/colorPrimary"
         android:textSize="32dp" />
 
 </LinearLayout>
