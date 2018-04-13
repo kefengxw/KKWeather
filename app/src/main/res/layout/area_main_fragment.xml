@@ -55,7 +55,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/area_main_guide_lineh"
         app:layout_constraintVertical_bias="0.0">
-
     </android.support.v7.widget.RecyclerView>
 
     <android.support.constraint.Guideline

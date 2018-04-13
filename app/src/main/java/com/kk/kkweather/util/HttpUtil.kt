@@ -14,17 +14,7 @@ import okhttp3.Response
 class HttpUtil {
 
     companion object {
-        //待考虑，是否把发送消息的这一段代码也放到子线程执行，同时考虑解析json的代码也在子线程执行，尽量UI线程只处理UI的事情
-        //这里使用
-//        fun sendOkHttpRequest(address: String): String?{
-//            val client: OkHttpClient = OkHttpClient()
-//            val request: Request = Request.Builder().url(address).build()
-//            val call: Call = client.newCall(request)
-//            val response : Response = call.execute()
-//
-//            return response.body()?.string()
-//        }
-
+        //val response : Response = call.execute()
         fun sendOkHttpRequest(address: String, callback: okhttp3.Callback) {
             val client: OkHttpClient = OkHttpClient()
             val request: Request = Request.Builder().url(address).build()
@@ -34,11 +24,7 @@ class HttpUtil {
         }
     }
 
-    /**
-     * 网络连接是否正常
-     *
-     * @return true:有网络    false:无网络
-     */
+//check the network works or not
 //    fun isNetworkConnected(context: Context?): Boolean {
 //        if (context != null) {
 //            val mConnectivityManager = context!!

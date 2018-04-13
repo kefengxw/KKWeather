@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/life_suggestion"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/life_suggestion_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:text="Life Suggestion"
         android:textColor="@android:color/white"
         android:textSize="24sp" />
@@ -22,36 +20,33 @@
         android:id="@+id/life_suggestions_content_comf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="舒适度"
+        android:layout_marginTop="8dp"
+        android:text="Comfort"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
-        />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/life_suggestions_content_sport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="室内运动"
+        android:layout_marginTop="8dp"
+        android:text="Activities"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
-        />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/life_suggestions_content_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="适合洗车"
+        android:layout_marginTop="8dp"
+        android:text="CarWashing"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
-        />
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.preference.PreferenceManager
 import com.kk.kkweather.util.LogUtil
-import android.widget.Toast
 import com.kk.kkweather.R
 import kotlinx.android.synthetic.main.area_main_fragment.*
 
@@ -19,8 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (true == tryToStartWeatherActivity())
-        {
+        if (true == tryToStartWeatherActivity()) {
             LogUtil.i("MainActivity", "Successful to start WeatherActivity")
             return
         }
@@ -34,14 +32,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun tryToStartWeatherActivity() : Boolean{
-        //后续可以根据定位来确定，或者根据设置来确定城市
-        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
+    private fun tryToStartWeatherActivity(): Boolean {
+        //later, can add the GPS feature here, to decide current location
+        var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
         var wid = prefs.getString("weatherId", null)
         var cou = prefs.getString("country", null)
         var ret = false
-        if (wid != null)
-        {
+        if (wid != null) {
             WeatherActivity.actionStartWA(ctx, cou, wid)
             AreaMainFragment.activityType = AreaMainFragment.ACTIVITY_TYPE_WEATHER_DRAWER_ACTIVITY
             this.finish()//close area main activity
@@ -51,39 +48,39 @@ class MainActivity : AppCompatActivity() {
         return ret
     }
 
-    override fun onStart() {
-        super.onStart()
-//        Toast.makeText(ctx, "Hi MainActivity onStart", Toast.LENGTH_SHORT).show()
-        LogUtil.i("KW-MainActivity", "MainActivity onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        Toast.makeText(ctx, "Hi MainActivity onResume", Toast.LENGTH_SHORT).show()
-        LogUtil.i("KW-MainActivity", "MainActivity onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-//        Toast.makeText(ctx, "Hi MainActivity onPause", Toast.LENGTH_SHORT).show()
-        LogUtil.i("KW-MainActivity", "MainActivity onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-//        Toast.makeText(ctx, "Hi MainActivity onStop", Toast.LENGTH_SHORT).show()
-        LogUtil.i("KW-MainActivity", "MainActivity onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        Toast.makeText(ctx, "Hi MainActivity onDestroy", Toast.LENGTH_SHORT).show()
-        LogUtil.i("KW-MainActivity", "MainActivity onDestroy")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-//        Toast.makeText(ctx, "Hi MainActivity onRestart", Toast.LENGTH_SHORT).show()
-        LogUtil.i("KW-MainActivity", "MainActivity onRestart")
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        //Toast.makeText(ctx, "Hi MainActivity onStart", Toast.LENGTH_SHORT).show()
+//        LogUtil.i("KW-MainActivity", "MainActivity onStart")
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        //Toast.makeText(ctx, "Hi MainActivity onResume", Toast.LENGTH_SHORT).show()
+//        LogUtil.i("KW-MainActivity", "MainActivity onResume")
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        //Toast.makeText(ctx, "Hi MainActivity onPause", Toast.LENGTH_SHORT).show()
+//        LogUtil.i("KW-MainActivity", "MainActivity onPause")
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        //Toast.makeText(ctx, "Hi MainActivity onStop", Toast.LENGTH_SHORT).show()
+//        LogUtil.i("KW-MainActivity", "MainActivity onStop")
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        //Toast.makeText(ctx, "Hi MainActivity onDestroy", Toast.LENGTH_SHORT).show()
+//        LogUtil.i("KW-MainActivity", "MainActivity onDestroy")
+//    }
+//
+//    override fun onRestart() {
+//        super.onRestart()
+//        //Toast.makeText(ctx, "Hi MainActivity onRestart", Toast.LENGTH_SHORT).show()
+//        LogUtil.i("KW-MainActivity", "MainActivity onRestart")
+//    }
 }

@@ -31,8 +31,6 @@ import kotlinx.android.synthetic.main.wmdrawerlayout.*
 import okhttp3.Call
 import okhttp3.Response
 import java.io.IOException
-import java.lang.reflect.Method
-
 
 /**
  * Created by xxnfd on 25/03/2018.
@@ -89,7 +87,7 @@ class WeatherActivity : AppCompatActivity() {
 
         setWeatherElementVisibleByLoading(true, usingDefaultWeatherInfo)
 
-        //*********************注意这里必须考虑先后顺序的问题*********************
+        //here need to consider sequence problems, which event happens first(update background/weather)
         queryWeatherInfo(weatherAddr)
         queryBackgroundPic(backgroundPicAddr)
 
@@ -101,7 +99,6 @@ class WeatherActivity : AppCompatActivity() {
 
     private fun startAutoUpdateWeatherService() {
         LogUtil.i("WeatherActivity", "startAutoUpdateWeatherService")
-
         startBackgoundUpdateWeatherInfo(ctx, currentCountry, currentWeatherId, weatherAddr)
     }
 
@@ -125,22 +122,17 @@ class WeatherActivity : AppCompatActivity() {
     private fun queryBackgroundPic(address: String) {
         HttpUtil.sendOkHttpRequest(address, object : okhttp3.Callback {
             override fun onFailure(call: Call?, e: IOException?) {
-                //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("WeatherActivity", "BackgroundPic-onFailure")
                 usingDefaultPicBgInfo = true
                 picbgReady = true
-                //201需要处理一下
             }
 
             override fun onResponse(call: Call?, response: Response?) {
-                //在这里进行解码Json操作,在这里可以看到解析好的数据，当前属于子线程
                 var responseDate: String? = response?.body()?.string()
-
                 LogUtil.i("WeatherActivity", "BackgroundPic-onResponse: ${responseDate}")
 
                 picbgAddr = responseDate!!
                 picbgReady = true
-
                 tryToUpdateWeatherActivityUi()
             }
         })
@@ -161,7 +153,6 @@ class WeatherActivity : AppCompatActivity() {
 
         HttpUtil.sendOkHttpRequest(address, object : okhttp3.Callback {
             override fun onFailure(call: Call?, e: IOException?) {
-                //在这里进行解码Json失败的操作，当前属于子线程
                 LogUtil.i("WeatherActivity", "WeatherInfo-onFailure")
                 weatherInfoReady = true
                 usingDefaultWeatherInfo = true
@@ -169,9 +160,7 @@ class WeatherActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call?, response: Response?) {
-                //在这里进行解码Json操作,在这里可以看到解析好的数据，当前属于子线程
                 var responseDate: String? = response?.body()?.string()
-
                 LogUtil.i("WeatherActivity", "WeatherInfo-onResponse: ${responseDate}")
 
                 weatherInfoReady = true
@@ -185,13 +174,12 @@ class WeatherActivity : AppCompatActivity() {
 
         if (null == jsonData || (jsonData.contains("error"))) {
             usingDefaultWeatherInfo = true
-            tryToUpdateWeatherActivityUi()//那就还是刷新一下吧
+            tryToUpdateWeatherActivityUi()//refresh again
             return
         }
 
         val gson: Gson = Gson()
         jsonWeatherData = gson.fromJson(jsonData, JsonWeather::class.java)
-
         tryToUpdateWeatherActivityUi(jsonData)
     }
 
@@ -203,7 +191,7 @@ class WeatherActivity : AppCompatActivity() {
                     if ("" != picbgAddr) {
                         Glide.with(ctx).load(picbgAddr).into(backgroundPic)
                     } else {
-                        //使用本地的pic,后续补充101
+                        //try to use the default picture locally, add the feature later
                         //Glide.with(ctx).load(picbgAddr).into(backgroundPic)
                     }
                     if (false == usingDefaultWeatherInfo) UpdateAllWeatherInfo(jsonWeatherData)
@@ -219,7 +207,7 @@ class WeatherActivity : AppCompatActivity() {
                 }
             })
         } else {
-            LogUtil.i("WeatherActivity", "天气或背景更新失败!w ${weatherInfoReady},b ${picbgReady}")
+            LogUtil.i("WeatherActivity", "Fail to update the weather Info!w ${weatherInfoReady},b ${picbgReady}")
         }
 
         swipe_refresh.setRefreshing(false)
@@ -257,9 +245,9 @@ class WeatherActivity : AppCompatActivity() {
             aqi_index_value.aqi_index_pm25.text = i.aqi.city.pm
             aqi_index_value.aqi_index_air.text = i.aqi.city.pm
 
-            life_suggestion_w.life_suggestions_content_comf.text = "舒适度: " + i.suggestion.comf.txt
-            life_suggestion_w.life_suggestions_content_sport.text = "运动指数: " + i.suggestion.sport.txt
-            life_suggestion_w.life_suggestions_content_car.text = "洗车建议: " + i.suggestion.cw.txt
+            life_suggestion_w.life_suggestions_content_comf.text = "Comfort: " + i.suggestion.comf.txt
+            life_suggestion_w.life_suggestions_content_sport.text = "Activities: " + i.suggestion.sport.txt
+            life_suggestion_w.life_suggestions_content_car.text = "CarWashing: " + i.suggestion.cw.txt
         }
 
         return
@@ -272,7 +260,7 @@ class WeatherActivity : AppCompatActivity() {
 
         toolBar.bringToFront()
         if (true == usingDefaultWeatherInfo) {
-            //显示数据加载失败
+            //show "fail to loading"
             loading_component.failInfo.visibility = View.VISIBLE
             loading_component.progressBarText.visibility = View.INVISIBLE
             if (false == swipe_refresh.isRefreshing())
@@ -320,10 +308,10 @@ class WeatherActivity : AppCompatActivity() {
                 //Toast.makeText(ctx, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
                 refreshWeatherManually()
             }
-            android.R.id.home -> {//一定需要加android,不然无效，这个不是资源，而是android系统自定义的值
+            android.R.id.home -> {//must start with android, this value is define by android system
                 //Toast.makeText(ctx, "Hi home AS UP", Toast.LENGTH_SHORT).show()
                 weather_main_drawer_layout.openDrawer(GravityCompat.START)
-                //val v: View = LayoutInflater.from(ctx).inflate(R.layout.activity_main, weather_main, false) 不行
+                //val v: View = LayoutInflater.from(ctx).inflate(R.layout.activity_main, weather_main, false) do not work
                 //drawer_layout.closeDrawers()
             }
         }
@@ -331,6 +319,9 @@ class WeatherActivity : AppCompatActivity() {
         return true
     }
 
+    fun closeDrawers() {
+        weather_main_drawer_layout.closeDrawers()
+    }
 //    override fun onMenuOpened(featureId: Int, menu: Menu?): Boolean {
 //        if (menu?.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
 //            val method: Method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
@@ -343,17 +334,11 @@ class WeatherActivity : AppCompatActivity() {
 //    private fun setDebugModel() {
 //        if (LogUtil.kkwlogall == LogUtil.kkwloglevel) {
 //            LogUtil.kkwloglevel = LogUtil.kkwnonthing
-//            Toast.makeText(ctx, "kkwnonthing", Toast.LENGTH_SHORT).show()
 //        } else {
 //            LogUtil.kkwloglevel = LogUtil.kkwlogall
-//            Toast.makeText(ctx, "kkwlogall", Toast.LENGTH_SHORT).show()
 //        }
 //    }
 //    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {}
 //    title_weather_w.weather_cityhome.setOnClickListener(object : View.OnClickListener {
 //        override fun onClick(v: View?) {}})
-
-    fun closeDrawers() {
-        weather_main_drawer_layout.closeDrawers()
-    }
 }

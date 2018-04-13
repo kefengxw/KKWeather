@@ -2,20 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/area_item"
-    android:background="@color/colorPrimary"
-    android:orientation = "horizontal"
     android:layout_width="match_parent"
-    android:layout_height="55dp">
+    android:layout_height="55dp"
+    android:background="@color/colorPrimary"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/area_item_image"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="10dp"
         android:layout_weight="0.2"
-        android:layout_marginLeft="8dp"
-        android:scaleType="fitXY"
-        />
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/area_item_name"

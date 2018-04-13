@@ -1,7 +1,6 @@
 package com.kk.kkweather.activity
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -11,7 +10,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kk.kkweather.R
@@ -23,20 +21,18 @@ import com.kk.kkweather.gson.JsonCountry
 import com.kk.kkweather.gson.JsonProvince
 import com.kk.kkweather.util.HttpUtil
 import com.kk.kkweather.util.LogUtil
-import kotlinx.android.synthetic.main.area_main_fragment.*
 import kotlinx.android.synthetic.main.area_main_fragment.view.*
 import okhttp3.Call
 import okhttp3.Response
 import org.litepal.crud.DataSupport
 import java.io.IOException
-import android.provider.ContactsContract.CommonDataKinds.Phone
-
 
 /**
  * Created by xxnfd on 28/03/2018.
  */
 
 class AreaMainFragment : Fragment() {
+
     var ctx: Context? = null
     lateinit var areaListView: RecyclerView
     lateinit var currentView: View
@@ -63,8 +59,7 @@ class AreaMainFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        //在这里进行更新cnx，必须更新
+        //must update ctx here, because this is only Fragment
         ctx = context
 
         val view = inflater.inflate(R.layout.area_main_fragment, container, false)
@@ -172,11 +167,7 @@ class AreaMainFragment : Fragment() {
 
         WeatherActivity.actionStartWA(ctx, country, weatherId)
 
-        if (AreaMainFragment.ACTIVITY_TYPE_AREA_MAIN_ACTIVITY == AreaMainFragment.activityType) {
-        //from main area activity
-        //WeatherActivity.actionStartWA(ctx, country, weatherId)
-        //getActivity()?.finish()
-        } else { //from layout drawer weather activity
+        if (AreaMainFragment.ACTIVITY_TYPE_AREA_MAIN_ACTIVITY != AreaMainFragment.activityType) {
             val acti: WeatherActivity = getActivity() as WeatherActivity
             acti.closeDrawers()
         }
@@ -195,7 +186,7 @@ class AreaMainFragment : Fragment() {
     private fun backToProvinceActivity() {
         currentLevel = LEVEL_PROVINCE
         currentView.area_main_title_backbutton.visibility = View.INVISIBLE
-        currentView.area_main_title_text.text = "中国"
+        currentView.area_main_title_text.text = "China"
 
         queryAreaInfofromDatabaseAndRefreshDataOnUI(0)
     }
@@ -238,7 +229,7 @@ class AreaMainFragment : Fragment() {
         when (currentLevel) {
             LEVEL_PROVINCE -> {
                 val dbplist: List<dbProvince> = DataSupport.where("provinceCode>?", "0")
-                        .order("provinceCode")//从数据库中查询出来，一定进行排序，确保体验
+                        .order("provinceCode")//need to sort after get all the data
                         .find(dbProvince::class.java)
                 areaList.clear()
                 for (i in dbplist) areaList.add(AreaItem(name = i.provinceName, id = i.provinceCode))
@@ -246,7 +237,7 @@ class AreaMainFragment : Fragment() {
 
             LEVEL_CITY -> {
                 val dbcilist: List<dbCity> = DataSupport.where("provinceCode=?", "${inputId}")
-                        .order("cityCode")//从数据库中查询出来，一定进行排序，确保体验
+                        .order("cityCode")//need to sort after get all the data
                         .find(dbCity::class.java)
                 areaList.clear()
                 for (i in dbcilist) areaList.add(AreaItem(name = i.cityName, id = i.cityCode))
@@ -254,7 +245,7 @@ class AreaMainFragment : Fragment() {
 
             LEVEL_COUNTRY -> {
                 val dbcolist: List<dbCounty> = DataSupport.where("cityCode=?", "${inputId}")
-                        .order("countryCode")//从数据库中查询出来，一定进行排序，确保体验
+                        .order("countryCode")//need to sort after get all the data
                         .find(dbCounty::class.java)
                 areaList.clear()
                 for (i in dbcolist) areaList.add(AreaItem(name = i.countyName, id = i.countryCode, weatherId = i.weatherCode))
@@ -265,13 +256,13 @@ class AreaMainFragment : Fragment() {
     private fun queryAreaInfofromServer(address: String) {
         HttpUtil.sendOkHttpRequest(address, object : okhttp3.Callback {
             override fun onFailure(call: Call?, e: IOException?) {
-                //在这里进行解码Json失败的操作，当前属于子线程
+                //decode Json failed, it belongs to sub thread
                 LogUtil.i("HttpCallback", "queryAreaInfo-onFailure")
                 //Toast.makeText(ctx, "AreaMainFragment failed to get Area information", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call?, response: Response?) {
-                //在这里进行解码Json操作,在这里可以看到解析好的数据，当前属于子线程
+                //decode Json successful, it belongs to sub thread
                 var responseDate: String? = response?.body()?.string()
                 LogUtil.i("HttpCallback", "queryAreaInfo-onResponse: ${responseDate}")
                 parseJsonWithGSONforDb(responseDate)
@@ -280,7 +271,8 @@ class AreaMainFragment : Fragment() {
     }
 
     private fun parseJsonWithGSONforDb(jsonData: String?) {
-        //服务器返回来的消息只写数据库，不做其他的任何操作；如果需要数据，请从数据库中查询；这样形成一个统一的逻辑，操作数据入口唯一
+        //the data from server, make sure only write database, to make sure the only source for database and data struct
+        //Data flow: Internet-->Database-->DataStruct, if bug happens, easy to find it
 
         LogUtil.i("HttpCallback", "Start to praseJsonWithGSON for AreaInfo")
 
@@ -296,10 +288,7 @@ class AreaMainFragment : Fragment() {
 
                 for (i: JsonProvince in numbers) {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
-                    //areaList.add(AreaItem(i.name, id = i.id))
-
-                    //看看有无，有更新，无添加，数据库中多余的如何处理？删除
-                    //这里无条件更新数据库的查找，在外边控制逻辑，从软件维护和后续升级的角度考虑，不适合在这里做控制
+                    //only decode and update data here, better not to do control things
                     val dbplist: List<dbProvince> = DataSupport.where("provinceCode=?", "${i.id}").find(dbProvince::class.java)
                     val dbp = dbProvince(provinceCode = i.id, provinceName = i.name)
                     //for(x in ii){ LogUtil.i("xxx","yyy") }
@@ -307,8 +296,7 @@ class AreaMainFragment : Fragment() {
                         dbp.save()
                     } else {
                         dbp.updateAll("provinceCode=?", "${i.id}")
-                    }
-                    //101缺少一个逻辑把数据库中的过时的数据删除；
+                    }//need to delete data on the database, if area changes
                 }
             }
 
@@ -318,7 +306,6 @@ class AreaMainFragment : Fragment() {
 
                 for (i: JsonCity in numbers) {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name}")
-                    //areaList.add(AreaItem(i.name, id = i.id))
 
                     val dbcilist: List<dbCity> = DataSupport.where("cityCode=?", "${i.id}").find(dbCity::class.java)
                     val dbci = dbCity(cityCode = i.id, cityName = i.name, provinceCode = selectProvinceId)
@@ -326,8 +313,7 @@ class AreaMainFragment : Fragment() {
                         dbci.save()
                     } else {
                         dbci.updateAll("cityCode=?", "${i.id}")
-                    }
-                    //102缺少一个逻辑把数据库中的过时的数据删除；
+                    }//need to delete data on the database, if area changes
                 }
                 inputId = selectProvinceId
             }
@@ -338,7 +324,6 @@ class AreaMainFragment : Fragment() {
 
                 for (i: JsonCountry in numbers) {
                     LogUtil.i("HttpCallback", "praseJsonWithGSONfor ${currentLevel}-->${i.id} + ${i.name} + ${i.weather_id}")
-                    //areaList.add(AreaItem(i.name, id = i.id, weatherId = i.weather_id))
 
                     val dbcolist: List<dbCounty> = DataSupport.where("countryCode=?", "${i.id}").find(dbCounty::class.java)
                     val dbco = dbCounty(countryCode = i.id, countyName = i.name, cityCode = selectCityId, weatherCode = i.weather_id)
@@ -346,8 +331,7 @@ class AreaMainFragment : Fragment() {
                         dbco.save()
                     } else {
                         dbco.updateAll("countryCode=?", "${i.id}")
-                    }
-                    //103缺少一个逻辑把数据库中的过时的数据删除；
+                    }//need to delete data on the database, if area changes
                 }
                 inputId = selectCityId
             }
@@ -356,9 +340,7 @@ class AreaMainFragment : Fragment() {
         queryAreaInfofromDatabaseAndRefreshDataOnUIfromSubThread(inputId)
     }
 
-//    fun getAreaListData():MutableList<AreaItem>{
-//        return areaList
-//    }
+//    fun getAreaListData():MutableList<AreaItem>{ return areaList }
 
     private fun refreshAreaListDataOnUI() {
         areaListView.adapter.notifyDataSetChanged()
@@ -376,53 +358,53 @@ class AreaMainFragment : Fragment() {
         })
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        LogUtil.i("AreaMainFragment", "onAttach")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        LogUtil.i("AreaMainFragment", "onPause")
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        LogUtil.i("AreaMainFragment", "onActivityCreated")
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        LogUtil.i("AreaMainFragment", "onCreate")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        LogUtil.i("AreaMainFragment", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        LogUtil.i("AreaMainFragment", "onResume")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        LogUtil.i("AreaMainFragment", "onDetach")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        LogUtil.i("AreaMainFragment", "onDestroyView")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        LogUtil.i("AreaMainFragment", "onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        LogUtil.i("AreaMainFragment", "onDestroy")
-    }
+//    override fun onAttach(context: Context?) {
+//        super.onAttach(context)
+//        LogUtil.i("AreaMainFragment", "onAttach")
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        LogUtil.i("AreaMainFragment", "onPause")
+//    }
+//
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//        LogUtil.i("AreaMainFragment", "onActivityCreated")
+//    }
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        LogUtil.i("AreaMainFragment", "onCreate")
+//    }
+//
+//    override fun onStart() {
+//        super.onStart()
+//        LogUtil.i("AreaMainFragment", "onStart")
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        LogUtil.i("AreaMainFragment", "onResume")
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        LogUtil.i("AreaMainFragment", "onDetach")
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        LogUtil.i("AreaMainFragment", "onDestroyView")
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        LogUtil.i("AreaMainFragment", "onStop")
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        LogUtil.i("AreaMainFragment", "onDestroy")
+//    }
 }

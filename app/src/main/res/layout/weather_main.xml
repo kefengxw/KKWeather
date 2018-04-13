@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/weather_main"
@@ -13,8 +12,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="?android:attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        >
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
     </android.support.v7.widget.Toolbar>
 
     <!--<android.support.design.widget.AppBarLayout-->
@@ -37,12 +35,11 @@
         android:id="@+id/backgroundPic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolBar"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="0dp"
         android:scaleType="centerCrop"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolBar" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineh"
@@ -53,14 +50,13 @@
 
     <include
         android:id="@+id/loading_component"
+        layout="@layout/loading_weather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/guidelineh"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        layout="@layout/loading_weather"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineh" />
 
     <include
         android:id="@+id/title_weather_w"
@@ -72,119 +68,104 @@
         app:layout_constraintTop_toTopOf="@+id/toolBar"
         app:layout_constraintVertical_bias="1.0" />
 
-    <!--<android.support.v4.widget.SwipeRefreshLayout-->
-        <!--android:id="@+id/swipe_refresh"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineh">
 
-        <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintTop_toTopOf="@+id/guidelineh"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/forecast"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Forecast in Next 3 Days"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/forecast"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="Forecast in Next 3 Days"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+            <include
+                android:id="@+id/forecast_day1"
+                layout="@layout/forecast_item"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-                <include
-                    android:id="@+id/forecast_day1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    layout="@layout/forecast_item"
-                    />
+            <include
+                android:id="@+id/forecast_day2"
+                layout="@layout/forecast_item"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-                <include
-                    android:id="@+id/forecast_day2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    layout="@layout/forecast_item"
-                    />
+            <include
+                android:id="@+id/forecast_day3"
+                layout="@layout/forecast_item"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-                <include
-                    android:id="@+id/forecast_day3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    layout="@layout/forecast_item"
-                    />
+            <ImageView
+                android:id="@+id/image_bgup"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:textSize="8sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                <ImageView
-                    android:id="@+id/image_bgup"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/white"
-                    android:textSize="8sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+            <TextView
+                android:id="@+id/aqi_index"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="AQI Index"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/aqi_index"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="AQI Index"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+            <include
+                android:id="@+id/aqi_index_desc"
+                layout="@layout/aqi_item"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-                <include
-                    android:id="@+id/aqi_index_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    layout="@layout/aqi_item"
-                    />
+            <include
+                android:id="@+id/aqi_index_value"
+                layout="@layout/aqi_item"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-                <include
-                    android:id="@+id/aqi_index_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    layout="@layout/aqi_item"
-                    />
+            <ImageView
+                android:id="@+id/image_bgdown"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                <ImageView
-                    android:id="@+id/image_bgdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+            <include
+                android:id="@+id/life_suggestion_w"
+                layout="@layout/life_suggestion"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-                <include
-                    android:id="@+id/life_suggestion_w"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    layout="@layout/life_suggestion"
-                    />
-
-            </LinearLayout>
-        </ScrollView>
-    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

@@ -19,6 +19,7 @@ import java.io.IOException
  * a service on a separate handler thread.
  */
 class AutoUpdateWeatherService : IntentService("KKWeather") {
+
     lateinit var currentCountry :String
     lateinit var currentWeatherId : String
     lateinit var cweatherAddr : String
@@ -65,9 +66,7 @@ class AutoUpdateWeatherService : IntentService("KKWeather") {
             }
 
             override fun onResponse(call: Call?, response: Response?) {
-
                 var responseDate : String? = response?.body()?.string()
-
                 LogUtil.i("AutoUpdateWeatherService", "WeatherInfo-onResponse: ${responseDate}")
 
                 if (null == responseDate || (responseDate.contains("error"))) {
