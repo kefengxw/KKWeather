@@ -8,23 +8,23 @@ import android.util.Log
  */
 class LogUtil {
     companion object {
+        private val verbosekkw : Int= 1
+        private val debugkkw :Int = 2
+        private val infokkw : Int = 3
+        private val warningkkw : Int = 4
+        private val errorkkw : Int = 5
 
-        private val kwlogall : Int = 0
-        private val verbosekw : Int= 1
-        private val debugkw :Int = 2
-        private val infokw : Int = 3
-        private val warningkw : Int = 4
-        private val errorkw : Int = 5
-        private val nonthingkw : Int = 6
-        private val loglevelkw : Int = kwlogall
+        val kkwlogall : Int = 0
+        val kkwnonthing : Int = 6
+        var kkwloglevel : Int = kkwlogall
 
         var Pid : String = android.os.Process.myPid().toString()
         var Tid : String = android.os.Process.myTid().toString()
 
-        fun v(tag: String, msg: String) {if (loglevelkw <= verbosekw) Log.v(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
-        fun d(tag: String, msg: String) {if (loglevelkw <= debugkw) Log.d(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
-        fun i(tag: String, msg: String) {if (loglevelkw <= infokw) Log.i(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
-        fun w(tag: String, msg: String) {if (loglevelkw <= warningkw) Log.w(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
-        fun e(tag: String, msg: String) {if (loglevelkw <= errorkw) Log.e(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
+        fun v(tag: String, msg: String) {if (kkwloglevel <= verbosekkw) Log.v(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
+        fun d(tag: String, msg: String) {if (kkwloglevel <= debugkkw) Log.d(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
+        fun i(tag: String, msg: String) {if (kkwloglevel <= infokkw) Log.i(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
+        fun w(tag: String, msg: String) {if (kkwloglevel <= warningkkw) Log.w(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
+        fun e(tag: String, msg: String) {if (kkwloglevel <= errorkkw) Log.e(tag+" Pid: ${Pid} Tid + ${Tid}",msg)}
     }
 }

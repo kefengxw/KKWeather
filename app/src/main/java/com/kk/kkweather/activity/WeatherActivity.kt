@@ -71,7 +71,7 @@ class WeatherActivity : AppCompatActivity() {
         setSupportActionBar(toolBar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home_white_48dp)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white_36dp)
 
         LogUtil.i("WeatherActivity", "onCreate: ${ctx}")
 
@@ -91,7 +91,6 @@ class WeatherActivity : AppCompatActivity() {
         queryWeatherInfo(weatherAddr)
         queryBackgroundPic(backgroundPicAddr)
 
-        setCityHomeButtionListener(ctx)
         //switch_debug.setOnCheckedChangeListener(this)
         setSwipeRefreshListener()
 
@@ -312,11 +311,11 @@ class WeatherActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.app_bar_shot -> {
-                Toast.makeText(ctx, "Hi app_bar_shot", Toast.LENGTH_SHORT).show()
+                startScreenShot()
             }
             R.id.app_bar_setting -> {
-                Toast.makeText(ctx, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
-                //不响应任何事件处理
+                //Toast.makeText(ctx, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
+                setDebugModel()
             }
             R.id.app_bar_refresh -> {
                 //Toast.makeText(ctx, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
@@ -336,17 +335,22 @@ class WeatherActivity : AppCompatActivity() {
         return true
     }
 
-//    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-//        Toast.makeText(ctx, "Hi switch", Toast.LENGTH_SHORT).show()
-//    }
-
-    private fun setCityHomeButtionListener(ctx: Context?) {
-//        title_weather_w.weather_cityhome.setOnClickListener(object : View.OnClickListener {
-//            override fun onClick(v: View?) {
-//                LitePal.getDatabase()
-//            }
-//        })
+    private fun startScreenShot() {
+        Toast.makeText(ctx, "Hi app_bar_shot", Toast.LENGTH_SHORT).show()
     }
+
+    private fun setDebugModel() {
+        if (LogUtil.kkwlogall == LogUtil.kkwloglevel) {
+            LogUtil.kkwloglevel = LogUtil.kkwnonthing
+            Toast.makeText(ctx, "kkwnonthing", Toast.LENGTH_SHORT).show()
+        } else {
+            LogUtil.kkwloglevel = LogUtil.kkwlogall
+            Toast.makeText(ctx, "kkwlogall", Toast.LENGTH_SHORT).show()
+        }
+    }
+//    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {}
+//    title_weather_w.weather_cityhome.setOnClickListener(object : View.OnClickListener {
+//        override fun onClick(v: View?) {}})
 
     fun closeDrawers() {
         weather_main_drawer_layout.closeDrawers()

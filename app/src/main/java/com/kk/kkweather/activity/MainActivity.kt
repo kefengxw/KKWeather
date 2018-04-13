@@ -4,10 +4,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.preference.PreferenceManager
 import com.kk.kkweather.util.LogUtil
 import android.widget.Toast
 import com.kk.kkweather.R
+import kotlinx.android.synthetic.main.area_main_fragment.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +26,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.amframelayout)
+
+        //bug to fix, whilte backgournd
+        if (AreaMainFragment.activityType == AreaMainFragment.ACTIVITY_TYPE_AREA_MAIN_ACTIVITY) {
+            area_main_title_backbutton.setImageResource(R.drawable.ic_arrow_back_white_48dp)
+            area_main_title_backbutton.setColorFilter(Color.argb(255, 66, 133, 244))
+        }
     }
 
     private fun tryToStartWeatherActivity() : Boolean{
