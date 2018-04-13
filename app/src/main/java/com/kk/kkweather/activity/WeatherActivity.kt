@@ -8,6 +8,7 @@ import android.preference.PreferenceManager
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.appcompat.R.styleable.PopupWindow
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,8 +30,9 @@ import kotlinx.android.synthetic.main.weather_main.*
 import kotlinx.android.synthetic.main.wmdrawerlayout.*
 import okhttp3.Call
 import okhttp3.Response
-import org.litepal.LitePal
 import java.io.IOException
+import java.lang.reflect.Method
+
 
 /**
  * Created by xxnfd on 25/03/2018.
@@ -310,13 +312,10 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.app_bar_shot -> {
-                startScreenShot()
-            }
-            R.id.app_bar_setting -> {
-                //Toast.makeText(ctx, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
-                setDebugModel()
-            }
+//            R.id.app_bar_setting -> {
+//                //Toast.makeText(ctx, "Hi app_bar_setting", Toast.LENGTH_SHORT).show()
+//                setDebugModel()
+//            }
             R.id.app_bar_refresh -> {
                 //Toast.makeText(ctx, "Hi app_bar_refresh", Toast.LENGTH_SHORT).show()
                 refreshWeatherManually()
@@ -327,27 +326,29 @@ class WeatherActivity : AppCompatActivity() {
                 //val v: View = LayoutInflater.from(ctx).inflate(R.layout.activity_main, weather_main, false) 不行
                 //drawer_layout.closeDrawers()
             }
-            else -> {//R.id.app_bar_refresh
-                Toast.makeText(ctx, "Hi other", Toast.LENGTH_SHORT).show()
-            }
         }
 
         return true
     }
 
-    private fun startScreenShot() {
-        Toast.makeText(ctx, "Hi app_bar_shot", Toast.LENGTH_SHORT).show()
-    }
+//    override fun onMenuOpened(featureId: Int, menu: Menu?): Boolean {
+//        if (menu?.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
+//            val method: Method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+//            method.setAccessible(true)
+//            method.invoke(menu, true)
+//        }
+//        return super.onMenuOpened(featureId, menu)
+//    }
 
-    private fun setDebugModel() {
-        if (LogUtil.kkwlogall == LogUtil.kkwloglevel) {
-            LogUtil.kkwloglevel = LogUtil.kkwnonthing
-            Toast.makeText(ctx, "kkwnonthing", Toast.LENGTH_SHORT).show()
-        } else {
-            LogUtil.kkwloglevel = LogUtil.kkwlogall
-            Toast.makeText(ctx, "kkwlogall", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    private fun setDebugModel() {
+//        if (LogUtil.kkwlogall == LogUtil.kkwloglevel) {
+//            LogUtil.kkwloglevel = LogUtil.kkwnonthing
+//            Toast.makeText(ctx, "kkwnonthing", Toast.LENGTH_SHORT).show()
+//        } else {
+//            LogUtil.kkwloglevel = LogUtil.kkwlogall
+//            Toast.makeText(ctx, "kkwlogall", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 //    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {}
 //    title_weather_w.weather_cityhome.setOnClickListener(object : View.OnClickListener {
 //        override fun onClick(v: View?) {}})

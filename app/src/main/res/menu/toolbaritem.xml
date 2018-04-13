@@ -5,20 +5,9 @@
 
     <item
         android:id="@+id/app_bar_refresh"
-        android:title="´Refresh"
+        android:title="Refresh"
         android:icon="@drawable/ic_refresh_white_48dp"
         app:showAsAction="always"
-        />
-    <item
-        android:id="@+id/app_bar_shot"
-        android:title="ScreenShot"
-        app:showAsAction="never"
-        />
-    <item
-        android:id="@+id/app_bar_setting"
-        android:title="DebugModel"
-        app:showAsAction="never"
-        app:actionLayout="@layout/switch_item"
         />
 </menu>
 
