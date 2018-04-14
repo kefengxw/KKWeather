@@ -39,8 +39,7 @@ class WeatherActivity : AppCompatActivity() {
 
     val ctx = this
     val weatherAddrHead = "http://guolin.tech/api/weather/?cityid="
-    //val authKey = "9ff41582de514a658ac5f523363a6d08"//my
-    val authKey = "bc0418b57b2d4918819d3974ac1285d9"//public
+    val authKey = "9ff41582de514a658ac5f523363a6d08"//my
 
     var picbgReady: Boolean = false //means got the OkHttpRequest result, no matter failure or success
     var picbgAddr: String = ""      //means got the successful result
