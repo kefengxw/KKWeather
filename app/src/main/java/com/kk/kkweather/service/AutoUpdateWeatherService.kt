@@ -47,7 +47,7 @@ class AutoUpdateWeatherService : IntentService("KKWeather") {
         i.putExtra("flag", "true")
 
         manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val periodTime : Int = (1)*60*1000  //3 min
+        val periodTime : Int = (8)*(60)*60*1000  //8 hours
         val triggerAtTime = SystemClock.elapsedRealtime() + periodTime
         val pi = PendingIntent.getService(this,0, i, PendingIntent.FLAG_UPDATE_CURRENT)
         manager.cancel(pi)
