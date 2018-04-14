@@ -207,13 +207,13 @@ class WeatherActivity : AppCompatActivity() {
                         editor.putString("weatherInfo", jsonData)
                         editor.apply()
                     }
+
+                    swipe_refresh.setRefreshing(false)//must do it here, belong to UI Thread
                 }
             })
         } else {
             LogUtil.i("WeatherActivity", "Fail to update the weather Info!w ${weatherInfoReady},b ${picbgReady}")
         }
-
-        swipe_refresh.setRefreshing(false)
     }
 
     private fun UpdateAllWeatherInfo(jsonWeatherData: JsonWeather) {
