@@ -37,21 +37,21 @@ import java.io.IOException
  */
 class WeatherActivity : AppCompatActivity() {
 
-    val ctx = this
-    val weatherAddrHead = "http://guolin.tech/api/weather/?cityid="
-    val authKey = "9ff41582de514a658ac5f523363a6d08"//my
+    private val ctx = this
+    private val weatherAddrHead = "http://guolin.tech/api/weather/?cityid="
+    private val authKey = "9ff41582de514a658ac5f523363a6d08"//my
 
-    var picbgReady: Boolean = false //means got the OkHttpRequest result, no matter failure or success
-    var picbgAddr: String = ""      //means got the successful result
-    var usingDefaultPicBgInfo: Boolean = false
+    private var picbgReady: Boolean = false //means got the OkHttpRequest result, no matter failure or success
+    private var picbgAddr: String = ""      //means got the successful result
+    private var usingDefaultPicBgInfo: Boolean = false
 
-    var weatherInfoReady: Boolean = false
-    var weatherAddr: String = ""
-    var usingDefaultWeatherInfo: Boolean = false
+    private var weatherInfoReady: Boolean = false
+    private var weatherAddr: String = ""
+    private var usingDefaultWeatherInfo: Boolean = false
 
-    lateinit var jsonWeatherData: JsonWeather
-    lateinit var currentCountry: String
-    lateinit var currentWeatherId: String
+    private lateinit var jsonWeatherData: JsonWeather
+    private lateinit var currentCountry: String
+    private lateinit var currentWeatherId: String
 
     companion object {
         fun actionStartWA(ctx: Context?, data_Country: String, data_WeatherId: String) {
@@ -201,8 +201,8 @@ class WeatherActivity : AppCompatActivity() {
 
                     if (true == saveToLocal) {
                         // if refresh success, than save local data
-                        var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
-                        var editor: SharedPreferences.Editor = prefs.edit()
+                        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
+                        val editor: SharedPreferences.Editor = prefs.edit()
                         editor.putString("weatherInfoId", currentWeatherId)
                         editor.putString("weatherInfo", jsonData)
                         editor.apply()

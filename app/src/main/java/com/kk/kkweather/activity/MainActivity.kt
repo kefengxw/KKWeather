@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.area_main_fragment.*
 
 class MainActivity : AppCompatActivity() {
 
-    var ctx = this
+    private val ctx = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun tryToStartWeatherActivity(): Boolean {
         //later, can add the GPS feature here, to decide current location
-        var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
-        var wid = prefs.getString("weatherId", null)
-        var cou = prefs.getString("country", null)
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
+        val wid = prefs.getString("weatherId", null)
+        val cou = prefs.getString("country", null)
         var ret = false
         if (wid != null) {
             WeatherActivity.actionStartWA(ctx, cou, wid)

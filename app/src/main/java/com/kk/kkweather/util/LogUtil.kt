@@ -16,10 +16,10 @@ class LogUtil {
 
         val kkwlogall: Int = 0
         val kkwnonthing: Int = 6
-        var kkwloglevel: Int = kkwnonthing
+        var kkwloglevel: Int = kkwlogall
 
-        var Pid: String = android.os.Process.myPid().toString()
-        var Tid: String = android.os.Process.myTid().toString()
+        val Pid: String = android.os.Process.myPid().toString()
+        val Tid: String = android.os.Process.myTid().toString()
 
         fun v(tag: String, msg: String) {
             if (kkwloglevel <= verbosekkw) Log.v(tag + " Pid: ${Pid} Tid + ${Tid}", msg)

@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.area_item.view.*
  */
 class AreaRecyListAdapter(areaAllList: MutableList<AreaItem>, inctx: Context?) : RecyclerView.Adapter<AreaRecyListAdapter.AreaViewHolder>(), View.OnClickListener {
 
-    var ctx = inctx //might be null when initial
-    var areaList = areaAllList
+    private val ctx = inctx //might be null when initial
+    private val areaList = areaAllList
     private var mAreaItemClickListener: OnAreaItemClickListener? = null
 
     init {

@@ -20,20 +20,20 @@ import java.io.IOException
  */
 class AutoUpdateWeatherService : IntentService("KKWeather") {
 
-    lateinit var currentCountry :String
-    lateinit var currentWeatherId : String
-    lateinit var cweatherAddr : String
-    lateinit var manager : AlarmManager
+    private lateinit var currentCountry :String
+    private lateinit var currentWeatherId : String
+    private lateinit var currentweatherAddr : String
+    private lateinit var manager : AlarmManager
 
     override fun onHandleIntent(intent: Intent?) {
         when (intent?.action) {
             "AutoUpdateWeather" -> {
                 currentCountry = intent.getStringExtra("currentCountry")
                 currentWeatherId = intent.getStringExtra("currentWeatherId")
-                cweatherAddr = intent.getStringExtra("weatherAddr")
+                currentweatherAddr = intent.getStringExtra("weatherAddr")
                 val flag = intent.getStringExtra("flag")
                 if (flag.equals("true"))
-                    handleBackgoundUpdateWeatherInfo(cweatherAddr)//no need to update first time
+                    handleBackgoundUpdateWeatherInfo(currentweatherAddr)//no need to update first time
             }
             //"AutoUpdateBgPic" ->
         }
@@ -43,7 +43,7 @@ class AutoUpdateWeatherService : IntentService("KKWeather") {
         i.action = "AutoUpdateWeather"
         i.putExtra("currentCountry", currentCountry)
         i.putExtra("currentWeatherId", currentWeatherId)
-        i.putExtra("weatherAddr", cweatherAddr)
+        i.putExtra("weatherAddr", currentweatherAddr)
         i.putExtra("flag", "true")
 
         manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager

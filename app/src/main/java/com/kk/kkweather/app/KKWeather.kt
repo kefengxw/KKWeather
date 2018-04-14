@@ -10,8 +10,8 @@ import org.litepal.LitePal
 class KKWeatherApp : Application() {
 
     companion object {
-        lateinit var instance: KKWeatherApp
         //private set
+        lateinit var instance: KKWeatherApp
     }
 
     override fun onCreate() {
@@ -21,8 +21,8 @@ class KKWeatherApp : Application() {
 
     private fun globalInit() {
         instance = this
-        LitePal.initialize(this)
 
+        LitePal.initialize(this)
         LitePal.getDatabase()
 
         //better to define the log level here

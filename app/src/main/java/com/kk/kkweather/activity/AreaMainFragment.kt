@@ -33,26 +33,26 @@ import java.io.IOException
 
 class AreaMainFragment : Fragment() {
 
-    var ctx: Context? = null
-    lateinit var areaListView: RecyclerView
-    lateinit var currentView: View
-    lateinit var areaAdapter: AreaRecyListAdapter
+    private var ctx: Context? = null
+    private lateinit var areaListView: RecyclerView
+    private lateinit var currentView: View
+    private lateinit var areaAdapter: AreaRecyListAdapter
 
-    var currentLevel: Int = LEVEL_PROVINCE
+    private var currentLevel: Int = LEVEL_PROVINCE
 
-    var selectProvince: String = ""
-    var selectProvinceId: Int = 0
-    var selectCity: String = ""
-    var selectCityId: Int = 0
+    private var selectProvince: String = ""
+    private var selectProvinceId: Int = 0
+    private var selectCity: String = ""
+    private var selectCityId: Int = 0
 
-    val URL_OF_AREA: String = "http://guolin.tech/api/china"
+    private val URL_OF_AREA: String = "http://guolin.tech/api/china"
 
     companion object {
         val LEVEL_PROVINCE: Int = 1
         val LEVEL_CITY: Int = 2
         val LEVEL_COUNTRY: Int = 3
         val LEVEL_WEATHER: Int = 4
-        var areaList: MutableList<AreaItem> = mutableListOf()
+        val areaList: MutableList<AreaItem> = mutableListOf()
         var activityType: Int = 0//Default 0 (AreaMainAcitivity), 1 (WeatherAcitivity)
         val ACTIVITY_TYPE_AREA_MAIN_ACTIVITY: Int = 0
         val ACTIVITY_TYPE_WEATHER_DRAWER_ACTIVITY: Int = 1
@@ -159,8 +159,8 @@ class AreaMainFragment : Fragment() {
 
     private fun switchToWeatherActivity(ctx: Context?, country: String, weatherId: String) {
         //save local data without condition
-        var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
-        var editor: SharedPreferences.Editor = prefs.edit()
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
+        val editor: SharedPreferences.Editor = prefs.edit()
         editor.putString("country", country)
         editor.putString("weatherId", weatherId)
         editor.apply()
@@ -273,7 +273,6 @@ class AreaMainFragment : Fragment() {
     private fun parseJsonWithGSONforDb(jsonData: String?) {
         //the data from server, make sure only write database, to make sure the only source for database and data struct
         //Data flow: Internet-->Database-->DataStruct, if bug happens, easy to find it
-
         LogUtil.i("HttpCallback", "Start to praseJsonWithGSON for AreaInfo")
 
         if (null == jsonData) return
