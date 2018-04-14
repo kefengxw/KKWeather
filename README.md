@@ -12,6 +12,6 @@ Features of Android:
 7. DrawerLayout,
 8. SwipeRefreshLayout,
 
-![KKWeather1.PNG](https://github.com/kefengxw/KKWeather/blob/master/ScreenShot/KKWeather1.PNG)
+![ic_kkwlogo.png](https://github.com/kefengxw/KKWeather/blob/master/ScreenShot/ic_kkwlogo.png)
 
-![KKWeather2.PNG](https://github.com/kefengxw/KKWeather/blob/master/ScreenShot/KKWeather2.PNG)
+![KKWeather1.PNG](https://github.com/kefengxw/KKWeather/blob/master/ScreenShot/KKWeather1.PNG), ![KKWeather2.PNG](https://github.com/kefengxw/KKWeather/blob/master/ScreenShot/KKWeather2.PNG)
