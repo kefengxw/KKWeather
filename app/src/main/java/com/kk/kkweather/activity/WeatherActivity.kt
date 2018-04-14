@@ -112,6 +112,7 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun refreshWeatherManually() {
+        LogUtil.i("WeatherActivity", "refreshWeatherManually")
         usingDefaultWeatherInfo = false
         setWeatherElementVisibleByLoading(true, usingDefaultWeatherInfo)
 
@@ -156,7 +157,7 @@ class WeatherActivity : AppCompatActivity() {
                 LogUtil.i("WeatherActivity", "WeatherInfo-onFailure")
                 weatherInfoReady = true
                 usingDefaultWeatherInfo = true
-                tryToUpdateWeatherActivityUi()
+                tryToUpdateWeatherActivityUi(saveToLocal = false)
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -174,7 +175,7 @@ class WeatherActivity : AppCompatActivity() {
 
         if (null == jsonData || (jsonData.contains("error")) || (jsonData.contains("no more requests"))) {
             usingDefaultWeatherInfo = true
-            tryToUpdateWeatherActivityUi()//refresh again
+            tryToUpdateWeatherActivityUi(saveToLocal = false)//refresh again
             return
         }
 
@@ -183,7 +184,7 @@ class WeatherActivity : AppCompatActivity() {
         tryToUpdateWeatherActivityUi(jsonData)
     }
 
-    private fun tryToUpdateWeatherActivityUi(jsonData: String? = null) {
+    private fun tryToUpdateWeatherActivityUi(jsonData: String? = null, saveToLocal : Boolean= true) {
         if (true == weatherInfoReady && true == picbgReady) {
             runOnUiThread(object : Runnable {
                 override fun run() {
@@ -198,12 +199,14 @@ class WeatherActivity : AppCompatActivity() {
 
                     setWeatherElementVisibleByLoading(false, usingDefaultWeatherInfo)
 
-                    // if refresh success, than save local data
-                    var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
-                    var editor: SharedPreferences.Editor = prefs.edit()
-                    editor.putString("weatherInfoId", currentWeatherId)
-                    editor.putString("weatherInfo", jsonData)
-                    editor.apply()
+                    if (true == saveToLocal) {
+                        // if refresh success, than save local data
+                        var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx)
+                        var editor: SharedPreferences.Editor = prefs.edit()
+                        editor.putString("weatherInfoId", currentWeatherId)
+                        editor.putString("weatherInfo", jsonData)
+                        editor.apply()
+                    }
                 }
             })
         } else {
